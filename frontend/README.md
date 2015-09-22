@@ -31,7 +31,6 @@ Make use of the many generators for code, try `ember help generate` for more det
 
 * `ember test` or `ember t`
 * `ember test --server` or `ember t -s`
-roduction)
 
 ## Further Reading / Useful Links
 
