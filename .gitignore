@@ -1,3 +1,5 @@
 backend/.activePlaylists/
 backend/.cache-*
 backend/spotify_appkey.key
+
+*.pyc
