@@ -3,38 +3,50 @@
 GitSound
 
 Usage:
-  cli.py show (local | remote) Show all playlists locally or form spotify
-  cli.py select <playlist_id>  Set the current playlist
-  cli.py clone <playlist_id>   Clone a playlist from spotify
-  cli.py add <track_id>        Add a track by id to the current playlist
-  cli.py remove <track_id>     Remove a track by id from the current playlist
-  cli.py status                See all changes to be committed
-  cli.py commit                Commit all changes
+  cli.py <command> [<argument>] [--help]
 
-Options:
-  -h --help                    Show this screen.
+options:
+  -h, --help             Show this message.
+
+Command List:
+  show [local | remote]  Show all playlists locally or form spotify
+  select <playlist_id>   Set the current playlist
+  clone <playlist_id>    Clone a playlist from spotify
+  add <track_id>         Add a track by id to the current playlist
+  remove <track_id>      Remove a track by id from the current playlist
+  status                 See all changes to be committed
+  commit                 Commit all changes
 """
 
 from docopt import docopt
 
 if __name__ == '__main__':
+    # Initialize docopt and grab args
+    args = docopt(__doc__)
 
-    args = docopt(__doc__, options_first=True)
+    # Simplify references to args
+    cmd = args['<command>']
+    arg = args['<argument>']
 
-    if (args['show']):
-        if (args['local']):
+    # Determine how to handle args
+    if (cmd == 'show'):
+        if (arg == 'local'):
             print('Show all local playlists')
-        elif (args['remote']):
+        elif (arg == 'remote'):
             print('Show all remote playlists')
-    elif (args['select'] and args['<playlist_id>']):
-        print('Select playlist with id ' + args['<playlist_id>'])
-    elif (args['clone'] and args['<playlist_id>']):
-        print('Clone playlist with id ' + args['<playlist_id>'])
-    elif (args['add'] and args['<track_id>']):
-        print('Add track with id ' + args['<track_id>'] + ' to current playlist')
-    elif (args['remove'] and args['<track_id>']):
-        print('Remove track with id ' + args['<track_id>'] + ' from current playlist')
-    elif (args['commit']):
+        else:
+            print('Show all playlists, local and remote')
+    elif (cmd == 'select' and arg != None):
+        print('Select playlist with id ' + arg)
+    elif (cmd == 'clone' and arg != None):
+        print('Clone playlist with id ' + arg)
+    elif (cmd == 'add' and arg != None):
+        print('Add track with id ' + arg + ' to current playlist')
+    elif (cmd == 'remove' and arg != None):
+        print('Remove track with id ' + arg + ' from current playlist')
+    elif (cmd == 'commit'):
         print('Commit all changes to current playlist')
-    elif (args['status']):
+    elif (cmd == 'status'):
         print('Show changes to commit')
+    else:
+        print('Usage: cli.py <command> [<argument>]')
