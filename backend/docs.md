@@ -16,22 +16,22 @@ parsing commands and calling the relevant functions.
 
 The API for GitSound.
 
-### getPlaylistIDs() ->
+##### getPlaylistIDs():
 
 Returns a list of ids for the users playlist in the following format `{userID}/{playlistID}`.
 
-### getPlaylistTracks(playlistId) ->
+##### getPlaylistTracks(playlistId):
 
 Returns all of the trackIds from the playlist.
 
-### initGitPlaylist(playlistId) ->
+##### initGitPlaylist(playlistId):
 
 Initializes a new git playlist.
 
-### addSongToPlaylist(playlistId, trackId) ->
+##### addSongToPlaylist(playlistId, trackId):
 
 Adds the given track to the given playlist and commits the change.
 
-### removeSongFromPlaylist(playlistId, trackId) ->
+##### removeSongFromPlaylist(playlistId, trackId):
 
 Removes the given track from the given playlist and commits the change.
