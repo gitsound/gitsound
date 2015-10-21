@@ -8,9 +8,7 @@ The main entry point for GitSound. Handles authenticating a user with spotify.
 
 ## cli.py
 
-The CLI for gitSound. This is the way a user interacts with the program, and it
-kicks off other functions as needed. Has no functionality of its own other than
-parsing commands and calling the relevant functions.
+The CLI for gitSound. This is the way a user interacts with the program, and it kicks off other functions as needed. Has no functionality of its own other than parsing commands and calling the relevant functions.
 
 ## gitSound.py
 
