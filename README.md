@@ -46,3 +46,5 @@ $ ember t -s
 
 # License
 MIT
+
+Org. icon made by [Freepik](http://www.freepik.com) from [Flaticon](http://www.flaticon.com) licensed under [CC 3.0](http://creativecommons.org/licenses/by/3.0/)
