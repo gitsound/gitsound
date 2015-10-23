@@ -1,4 +1,4 @@
-# Git-sound Frontend
+# GitSound Frontend
 
 The Ember.js frontend for GitSound.
 
