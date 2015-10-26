@@ -43,6 +43,9 @@ class spotifyUser(object):
         # get the current spotify playlists
         self.playlists = self.sp.user_playlists(username)['items']
 
+        self.tree = None;
+        self.repo = None;
+
     def getPlaylistIDs(self):
         ids = []
         for playlist in self.playlists:
@@ -57,6 +60,12 @@ class spotifyUser(object):
         playId = pid[1]
         playlistInfo = self.sp.user_playlist(user, playId)["tracks"]["items"]
         return playlistInfo
+
+    def getTree(self):
+        return self.tree
+
+    def getRepo(self):
+        return self.repo
 
     def initGitPlaylist(self, pid):
 
@@ -95,7 +104,7 @@ class spotifyUser(object):
                        os.stat(self.gitDir + pid + "/index.txt").st_mode)
 
         # build tree again
-        tree = newTree.write()
+        self.tree = newTree.write()
 
         # add the index file to the repo
         newRepo.index.read()
@@ -104,7 +113,7 @@ class spotifyUser(object):
 
         # commit the file
         newRepo.create_commit(
-            "HEAD", self.author, self.comitter, "Added index.txt", tree,
+            "HEAD", self.author, self.comitter, "Added index.txt", self.tree,
             [firstCom])
 
     def addSongToPlaylist(self, pid, songid):
@@ -131,29 +140,20 @@ class spotifyUser(object):
         playId = pidSplit[1]
 
         # get the repo
-        repo = pygit2.Repository(self.gitDir + user + "/" + playId)
+        self.repo = pygit2.Repository(self.gitDir + user + "/" + playId)
 
-        # create a new blow for our new index
-        fileBlob = repo.create_blob_fromdisk(
+        # create a new blob for our new index
+        fileBlob = self.repo.create_blob_fromdisk(
             self.gitDir + pid + "/index.txt")
 
         # build the tree
-        newTree = repo.TreeBuilder()
+        newTree = self.repo.TreeBuilder()
 
         # add the index file
         newTree.insert("index.txt", fileBlob,
                        os.stat(self.gitDir + pid + "/index.txt").st_mode)
 
-        tree = newTree.write()
-
-        # add the new index file to the commit
-        repo.index.read()
-        repo.index.add("index.txt")
-        repo.index.write()
-
-        # commit the new file
-        repo.create_commit("HEAD", self.author, self.comitter,
-                           "Added " + songid, tree, [repo.head.target])
+        self.tree = newTree.write()
 
     def removeSongFromPlaylist(self, pid, songid):
 
@@ -191,28 +191,30 @@ class spotifyUser(object):
         user = pidSplit[0]
         playId = pidSplit[1]
 
-        repo = pygit2.Repository(self.gitDir + user + "/" + playId)
+        self.repo = pygit2.Repository(self.gitDir + user + "/" + playId)
 
         # create the file blob
-        fileBlob = repo.create_blob_fromdisk(
+        fileBlob = self.repo.create_blob_fromdisk(
             self.gitDir + pid + "/index.txt")
 
-        newTree = repo.TreeBuilder()
+        newTree = self.repo.TreeBuilder()
 
         # insert it into the tree
         newTree.insert("index.txt", fileBlob,
                        os.stat(self.gitDir + pid + "/index.txt").st_mode)
 
-        tree = newTree.write()
+        self.tree = newTree.write()
 
-        # add it to the commit
-        repo.index.read()
-        repo.index.add("index.txt")
-        repo.index.write()
+    def commitChangesToPlaylist(self, pid, tree):
+        
+        # add to commit 
+        self.repo.index.read()
+        self.repo.index.add("index.txt")
+        self.repo.index.write()
 
-        # commit
-        repo.create_commit("HEAD", self.author, self.comitter,
-                           "Removed " + songid, tree, [repo.head.target])
+        # commit changes to playlist
+        self.repo.create_commit("HEAD", self.author, self.comitter,
+                           "Changes committed to " + pid, tree, [self.repo.head.target])
 
 
 if __name__ == "__main__":
