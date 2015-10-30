@@ -214,6 +214,27 @@ class spotifyUser(object):
         repo.create_commit("HEAD", self.author, self.comitter,
                            "Removed " + songid, tree, [repo.head.target])
 
+    def songLookup(self, name=None, artist=None, limit=1):
+        results = self.sp.search(q='track:' + name, 
+            type='track', 
+            limit=limit)
+
+        if len(results['tracks']['items']) == 0: # if no songs found with that name
+            print("No results found for " + name)
+            return
+            # not sure if we want the above to raise an error/warning or just print out
+        else:
+            songs = {}
+            artists = results['tracks']['items'][0]['artists']
+            artistNames = []
+            for index, names in enumerate(artists):
+                artistNames.append(names['name']) # stores main artist and all the featured artists
+            songs['artists'] = artistNames
+            songs['trackid'] = results['tracks']['items'][0]['id']
+            songs['track'] = results['tracks']['items'][0]['name']
+            print("Results for " + songs['track'] + ' by ' + songs['artists'][0])
+            return songs # dictionary containing track name, artists, and track id
+
 
 if __name__ == "__main__":
     print("gitSound.py is a support libary, please run main.py instead.")
