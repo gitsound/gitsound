@@ -29,12 +29,19 @@ if __name__ == "__main__":
 
     playListIds = newUser.getPlaylistIDs()
 
-    #newUser.initGitPlaylist(playListIds[6])
+    # Init playlist
+    newUser.initGitPlaylist(playListIds[6])
 
-    #newUser.addSongToPlaylist(playListIds[6], "pop")
-    #newUser.addSongToPlaylist(playListIds[6], "dog")
-    #newUser.removeSongFromPlaylist(playListIds[6], "pop")
-    #newUser.removeSongFromPlaylist(playListIds[6], "dog")
+    # add songs, commit
+    newUser.addSongToPlaylist(playListIds[6], "pop")
+    newUser.addSongToPlaylist(playListIds[6], "dog")
+    newUser.commitChangesToPlaylist(playListIds[6], newUser.getTree())
 
+    # remove songs, commit
+    newUser.removeSongFromPlaylist(playListIds[6], "pop")
+    newUser.removeSongFromPlaylist(playListIds[6], "dog")
+    newUser.commitChangesToPlaylist(playListIds[6], newUser.getTree())
+
+    # look up songs
     newUser.songLookup('Diamonds From Sierra Leone - Remix - Album Version (Explicit)')
     newUser.songLookup('asdlfjsdlkfjsldkfjsdlkfjlskdjf')
