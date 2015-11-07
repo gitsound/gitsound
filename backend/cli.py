@@ -19,6 +19,7 @@ Command List:
 """
 
 from docopt import docopt
+from pygit2 import Repository
 import gitSound
 import json
 import os
@@ -74,16 +75,16 @@ if __name__ == '__main__':
             print('Select a playlist first')
         else:
             user.addSongToPlaylist(currentPID, arg)
-            print('Add track with id ' + arg + ' to current playlist')
+            print('Added track with id ' + arg + ' to current playlist')
     elif (cmd == 'remove' and arg != None):
         if (not currentPID):
             print('Select a playlist first')
         else:
             user.removeSongFromPlaylist(currentPID, arg)
-            print('Remove track with id ' + arg + ' from current playlist')
+            print('Removed track with id ' + arg + ' from current playlist')
     elif (cmd == 'commit'):
-        print('Not yet implemented.')
-        print('Commit all changes to current playlist')
+        user.commitChangesToPlaylist(currentPID)
+        print('Committed all changes to current playlist')
     elif (cmd == 'status'):
         print('Not yet implemented.')
         print('Show changes to commit')

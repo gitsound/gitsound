@@ -5,7 +5,6 @@ import spotipy.util as util
 import os
 import pygit2
 
-
 class spotifyUser(object):
 
     def __init__(self, username, client_id, client_secret, redirect_uri):
@@ -60,12 +59,6 @@ class spotifyUser(object):
         playId = pid[1]
         playlistInfo = self.sp.user_playlist(user, playId)["tracks"]["items"]
         return playlistInfo
-
-    def getTree(self):
-        return self.tree
-
-    def getRepo(self):
-        return self.repo
 
     def initGitPlaylist(self, pid):
 
@@ -205,7 +198,26 @@ class spotifyUser(object):
 
         self.tree = newTree.write()
 
-    def commitChangesToPlaylist(self, pid, tree):
+    def commitChangesToPlaylist(self, pid):
+
+        pidSplit = pid.split("/")
+        user = pidSplit[0]
+        playId = pidSplit[1]
+
+        # get the repo
+        self.repo = pygit2.Repository(self.gitDir + user + "/" + playId)
+
+        # create the file blob
+        fileBlob = self.repo.create_blob_fromdisk(
+            self.gitDir + pid + "/index.txt")
+
+        newTree = self.repo.TreeBuilder()
+
+        # insert it into the tree
+        newTree.insert("index.txt", fileBlob,
+                       os.stat(self.gitDir + pid + "/index.txt").st_mode)
+
+        self.tree = newTree.write()
 
         # add to commit
         self.repo.index.read()
@@ -214,7 +226,7 @@ class spotifyUser(object):
 
         # commit changes to playlist
         self.repo.create_commit("HEAD", self.author, self.comitter,
-                           "Changes committed to " + pid, tree, [self.repo.head.target])
+                           "Changes committed to " + pid, self.tree, [self.repo.head.target])
 
     def songLookup(self, name=None, artist=None, limit=1):
         results = self.sp.search(q='track:' + name,

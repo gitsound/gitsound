@@ -35,12 +35,12 @@ if __name__ == "__main__":
     # # add songs, commit
     # newUser.addSongToPlaylist(playListIds[6], "pop")
     # newUser.addSongToPlaylist(playListIds[6], "dog")
-    # newUser.commitChangesToPlaylist(playListIds[6], newUser.getTree())
+    # newUser.commitChangesToPlaylist(playListIds[6], newUser.tree)
     #
     # # remove songs, commit
     # newUser.removeSongFromPlaylist(playListIds[6], "pop")
     # newUser.removeSongFromPlaylist(playListIds[6], "dog")
-    # newUser.commitChangesToPlaylist(playListIds[6], newUser.getTree())
+    # newUser.commitChangesToPlaylist(playListIds[6], newUser.tree)
     #
     # # look up songs
     # newUser.songLookup('Diamonds From Sierra Leone - Remix - Album Version (Explicit)')
