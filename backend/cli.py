@@ -24,24 +24,6 @@ import gitSound
 import json
 import os
 
-def login():
-    askText = "please enter your spotify username: "
-    username = input(askText)
-
-    if os.path.isfile("gitSound_config.txt") == False:
-        raise RuntimeError(
-            "cannot find gitSound_config.txt in the working directory")
-
-    with open("gitSound_config.txt") as configFile:
-        configVars = json.loads(configFile.read())
-
-    newUser = gitSound.spotifyUser(
-        username, configVars["client_id"], configVars["client_secret"],
-        "http://localhost/callback")
-
-    return newUser
-
-
 if __name__ == '__main__':
 
     # Initialize docopt and grab args
@@ -51,8 +33,16 @@ if __name__ == '__main__':
     cmd = args['<command>']
     arg = args['<argument>']
 
-    user = login()
-    currentPID = user.getPlaylistIDs()[6]
+    if os.path.isfile("config.json") == False:
+        raise RuntimeError(
+            "cannot find config.json in the working directory")
+
+    with open("config.json") as configFile:
+        config = json.loads(configFile.read())
+
+    user = gitSound.spotifyUser(
+        config["user_id"], config["client_id"], config["client_secret"],
+        config["redirect_uri"])
 
     # Determine how to handle args
     if (cmd == 'show'):
@@ -71,19 +61,19 @@ if __name__ == '__main__':
         print('Not yet implemented.')
         print('Clone playlist with id ' + arg)
     elif (cmd == 'add' and arg != None):
-        if (not currentPID):
+        if (not config["current_pid"]):
             print('Select a playlist first')
         else:
-            user.addSongToPlaylist(currentPID, arg)
+            user.addSongToPlaylist(config["current_pid"], arg)
             print('Added track with id ' + arg + ' to current playlist')
     elif (cmd == 'remove' and arg != None):
-        if (not currentPID):
+        if (not config["current_pid"]):
             print('Select a playlist first')
         else:
-            user.removeSongFromPlaylist(currentPID, arg)
+            user.removeSongFromPlaylist(config["current_pid"], arg)
             print('Removed track with id ' + arg + ' from current playlist')
     elif (cmd == 'commit'):
-        user.commitChangesToPlaylist(currentPID)
+        user.commitChangesToPlaylist(config["current_pid"])
         print('Committed all changes to current playlist')
     elif (cmd == 'status'):
         print('Not yet implemented.')

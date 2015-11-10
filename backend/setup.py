@@ -5,32 +5,30 @@ import gitSound
 import json
 import os
 
-def login():
-    askText = "please enter your spotify username: "
-    username = input(askText)
-
-    if os.path.isfile("gitSound_config.txt") == False:
-        raise RuntimeError(
-            "cannot find gitSound_config.txt in the working directory")
-
-    with open("gitSound_config.txt") as configFile:
-        configVars = json.loads(configFile.read())
-
-    newUser = gitSound.spotifyUser(
-        username, configVars["client_id"], configVars["client_secret"],
-        "http://localhost/callback")
-
-    return newUser
-
-
 if __name__ == '__main__':
+    if (os.path.isfile("config.json") == True):
+        with open('config.json', 'r') as f:
+            try:
+                config = json.load(f)
+            except:
+                config = {}
 
-    user = login()
-    currentPID = user.getPlaylistIDs()[6]
+    config["name"] = input("name: ")
+    config["email"] = input("email: ")
+    config["user_id"] = input("spotify username: ")
 
-    with open('data.json', 'r+') as f:
-        data = json.load(f)
-        data['user_id'] = user.username
-        data['current_pid'] = currentPID
-        f.seek(0)
-        json.dump(data, f, indent=4)
+    if ("client_id" not in config):
+        config["client_id"] = input("client id: ")
+    if ("client_secret" not in config):
+        config["client_secret"] = input("client_secret: ")
+
+    config["redirect_uri"] = "http://localhost/callback"
+
+    user = gitSound.spotifyUser(
+        config["user_id"], config["client_id"], config["client_secret"],
+        config["redirect_uri"])
+
+    config["current_pid"] = user.getPlaylistIDs()[0]
+
+    with open('config.json', 'w') as f:
+        print(json.dumps(config, indent=4), file=f)

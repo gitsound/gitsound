@@ -16,11 +16,11 @@ if __name__ == "__main__":
         except:  # python 3.x
             username = input(askText)
 
-    if os.path.isfile("gitSound_config.txt") == False:
+    if os.path.isfile("config.json") == False:
         raise RuntimeError(
-            "cannot find gitSound_config.txt in the working directory")
+            "cannot find config.json in the working directory")
 
-    with open("gitSound_config.txt") as configFile:
+    with open("config.json") as configFile:
         configVars = json.loads(configFile.read())
 
     newUser = gitSound.spotifyUser(
