@@ -53,13 +53,19 @@ if __name__ == '__main__':
             print('Not yet implemented.')
             print('Show all local playlists')
         elif (arg == 'remote'):
-            print(user.getPlaylistIDs())
+            playlists = user.getPlaylistNames()
+            for index, playlist in enumerate(playlists):
+                print(str(index) + " |   " + playlist)
         else:
             print('Not yet implemented.')
             print('Show all playlists, local and remote')
     elif (cmd == 'select' and arg != None):
-        print('Not yet implemented')
-        print('Select playlist with id ' + arg)
+        config["current_pid"] = user.getPlaylistId(arg)
+
+        with open('config.json', 'w') as f:
+            print(json.dumps(config, indent=4), file=f)
+
+        print('Set current playlist to ' + user.getPlaylistName(arg))
     elif (cmd == 'clone' and arg != None):
         print('Not yet implemented.')
         print('Clone playlist with id ' + arg)
