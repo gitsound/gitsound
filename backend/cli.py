@@ -35,10 +35,13 @@ if __name__ == '__main__':
 
     if os.path.isfile("config.json") == False:
         raise RuntimeError(
-            "cannot find config.json in the working directory")
+            "Cannot find config.json. Ensure proper directory or run setup.py to reconfigure.")
 
     with open("config.json") as configFile:
-        config = json.loads(configFile.read())
+        try:
+            config = json.loads(configFile.read())
+        except:
+            raise RuntimeError("Improperly formatted config.json. Run setup.py to reconfigure.")
 
     user = gitSound.spotifyUser(
         config["user_id"], config["client_id"], config["client_secret"],
