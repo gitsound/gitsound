@@ -85,8 +85,8 @@ class spotifyUser(object):
         os.makedirs(self.gitDir + pid, exist_ok=True)
 
         if os.path.isfile(self.gitDir + pid + "/index.txt"):
-            raise RuntimeError("Tried to init git playlist when one of the " +
-                               "same playlist has been initiated already.")
+            raise RuntimeError("Tried to clone playlist when one of the " +
+                               "same playlist has been cloned already.")
 
         with open(self.gitDir + pid + "/index.txt", "w") as textFile:
             for track in trackList:
@@ -242,6 +242,45 @@ class spotifyUser(object):
         # commit changes to playlist
         self.repo.create_commit("HEAD", self.author, self.comitter,
                            "Changes committed to " + pid, self.tree, [self.repo.head.target])
+
+    def pullSpotifyPlaylist(self, pid):
+        # check if we have a git playlist before continuing
+        if not os.path.isfile(self.gitDir + pid + "/index.txt"):
+            print('No git playlist found. Clone playlist first.')
+
+        # grab tracks from spotify from pid
+        playId= pid.split("/")[1]
+        results = self.sp.user_playlist_tracks(self.username, playId)
+        results = results["items"]
+
+        # get just a list of the track ids from the response
+        remoteTracks = []
+        for track in results:
+            if track["track"]["id"] != None: # only take spotify tracks
+                remoteTracks.append(track["track"]["id"])
+
+        # get local track ids
+        with open(self.gitDir + pid + "/index.txt") as f:
+            localTracks = f.read().splitlines()
+
+        # merge tracks by adding if not added already. local takes precendence
+        # does not preserve position of new remote tracks
+        diff = False
+        for remoteTrack in remoteTracks:
+            if remoteTrack not in localTracks:
+                localTracks.append(remoteTrack)
+                diff = True
+
+        # write tracks back to file
+        with open(self.gitDir + pid + "/index.txt", "w") as f:
+            for track in localTracks:
+                print(track, file=f)
+
+        # commit playlist changes if needed
+        if (diff == True):
+            self.commitChangesToPlaylist(pid)
+            return 'Added and committed changes from remote.'
+        return 'No changes committed, up to date with remote.'
 
     def songLookup(self, name=None, artist=None, limit=1):
         results = self.sp.search(q='track:' + name,
