@@ -21,7 +21,7 @@ Command List:
 
 from docopt import docopt
 from pygit2 import Repository
-import gitSound
+import gitsound
 import util
 import json
 import os
@@ -37,7 +37,7 @@ if __name__ == '__main__':
 
     config = util.load_config()
 
-    user = gitSound.SpotifyUser(
+    user = gitsound.SpotifyUser(
         config["uid"], config["client_id"], config["client_secret"],
         config["redirect_uri"])
 

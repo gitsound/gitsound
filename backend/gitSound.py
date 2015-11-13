@@ -1,7 +1,6 @@
 # coding=utf-8
 from __future__ import unicode_literals, print_function
 import spotipy
-import spotipy.util
 import os
 import pygit2
 import util
@@ -299,4 +298,4 @@ class SpotifyUser(object):
 
 
 if __name__ == "__main__":
-    print("gitSound.py is a support libary, please run main.py instead.")
+    print("gitsound.py is a support libary, please run cli.py instead.")

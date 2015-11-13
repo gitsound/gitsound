@@ -1,7 +1,7 @@
 #! /usr/bin/env python
 
 from pygit2 import Repository
-import gitSound
+import gitsound
 import json
 import os
 
@@ -24,7 +24,7 @@ if __name__ == '__main__':
 
     config["redirect_uri"] = "http://localhost/callback"
 
-    user = gitSound.SpotifyUser(
+    user = gitsound.SpotifyUser(
         config["uid"], config["client_id"], config["client_secret"],
         config["redirect_uri"])
 
