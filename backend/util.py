@@ -1,7 +1,8 @@
 import json
 import os
 
-def loadConfig():
+
+def load_config():
     if os.path.isfile("config.json") == False:
         raise RuntimeError(
             "Cannot find config.json. Ensure proper directory or run setup.py to reconfigure.")
@@ -10,11 +11,13 @@ def loadConfig():
         try:
             config = json.loads(configFile.read())
         except:
-            raise RuntimeError("Improperly formatted config.json. Run setup.py to reconfigure.")
+            raise RuntimeError(
+                "Improperly formatted config.json. Run setup.py to reconfigure.")
 
     return config
 
-def saveConfig(data):
+
+def save_config(data):
     if os.path.isfile("config.json") == False:
         raise RuntimeError(
             "Cannot find config.json. Ensure proper directory or run setup.py to reconfigure.")
@@ -22,7 +25,8 @@ def saveConfig(data):
     with open('config.json', 'w') as f:
         print(json.dumps(data, indent=4), file=f)
 
-def checkIfGitPlaylist(gitDir, playlistPath):
+
+def check_if_git_playlist(gitDir, playlistPath):
 
     # make sure the directories exist
     os.makedirs(gitDir, exist_ok=True)

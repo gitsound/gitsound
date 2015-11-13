@@ -24,11 +24,11 @@ if __name__ == '__main__':
 
     config["redirect_uri"] = "http://localhost/callback"
 
-    user = gitSound.spotifyUser(
+    user = gitSound.SpotifyUser(
         config["uid"], config["client_id"], config["client_secret"],
         config["redirect_uri"])
 
-    ids = user.getPlaylistIDs()[0]
+    ids = user.get_playlist_ids()[0]
     config["current_playlist"]["uid"] = ids["uid"]
     config["current_playlist"]["pid"] = ids["pid"]
 

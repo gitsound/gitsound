@@ -35,9 +35,9 @@ if __name__ == '__main__':
     cmd = args['<command>']
     arg = args['<argument>']
 
-    config = util.loadConfig()
+    config = util.load_config()
 
-    user = gitSound.spotifyUser(
+    user = gitSound.SpotifyUser(
         config["uid"], config["client_id"], config["client_secret"],
         config["redirect_uri"])
 
@@ -51,31 +51,31 @@ if __name__ == '__main__':
             print('Not yet implemented.')
             print('Show all local playlists')
         elif (arg == 'remote'):
-            playlists = user.getPlaylistNames()
+            playlists = user.get_playlist_names()
             for index, playlist in enumerate(playlists):
                 print(str(index) + " |   " + playlist)
         else:
             print('Not yet implemented.')
             print('Show all playlists, local and remote')
     elif (cmd == 'select' and arg != None):
-        ids = user.getPlaylistId(arg)
+        ids = user.get_playlist_id(arg)
         config["current_playlist"]["uid"] = ids["uid"]
         config["current_playlist"]["pid"] = ids["pid"]
-        config["current_playlist"]["name"] = user.getPlaylistName(arg)
+        config["current_playlist"]["name"] = user.get_playlist_name(arg)
 
-        util.saveConfig(config)
+        util.save_config(config)
 
         print('Set current playlist to ' + config["current_playlist"]["name"])
     elif (cmd == 'clone' and arg != None):
-        ids = user.getPlaylistId(arg)
+        ids = user.get_playlist_id(arg)
         config["current_playlist"]["uid"] = ids["uid"]
         config["current_playlist"]["pid"] = ids["pid"]
-        config["current_playlist"]["name"] = user.getPlaylistName(arg)
+        config["current_playlist"]["name"] = user.get_playlist_name(arg)
 
-        util.saveConfig(config)
+        util.save_config(config)
 
         try:
-            user.initGitPlaylist(ids["uid"], ids["pid"])
+            user.init_git_playlist(ids["uid"], ids["pid"])
             print('Cloned playlist ' + config["current_playlist"]["name"])
         except:
             print(config["current_playlist"]["name"] + ' already cloned.')
@@ -83,20 +83,20 @@ if __name__ == '__main__':
         if (not pid):
             print('Select a playlist first')
         else:
-            user.addSongToPlaylist(uid, pid, arg)
+            user.add_song_to_playlist(uid, pid, arg)
             print('Added track with id ' + arg + ' to ' + pname)
     elif (cmd == 'remove' and arg != None):
         if (not pid):
             print('Select a playlist first')
         else:
-            user.removeSongFromPlaylist(uid, pid, arg)
+            user.remove_song_from_playlist(uid, pid, arg)
             print('Removed track with id ' + arg + ' from ' + pname)
     elif (cmd == 'commit'):
-        user.commitChangesToPlaylist(uid, pid)
+        user.commit_changes_to_playlist(uid, pid)
         print('Committed all changes to ' + pname)
     elif (cmd == 'pull'):
         print('On playlist ' + pname + ":")
-        print(user.pullSpotifyPlaylist(uid, pid))
+        print(user.pull_spotify_playlist(uid, pid))
     elif (cmd == 'status'):
         print('Not yet implemented.')
         print('Show changes to commit')

@@ -6,7 +6,8 @@ import os
 import pygit2
 import util
 
-class spotifyUser(object):
+
+class SpotifyUser(object):
 
     def __init__(self, username, client_id, client_secret, redirect_uri):
         self.username = username
@@ -19,7 +20,7 @@ class spotifyUser(object):
         scope += "playlist-modify-private "
 
         # directory that the gitfiles will be stored in
-        self.gitDir = ".activePlaylists/"
+        self.git_dir = ".activePlaylists/"
 
         # need to write more code to get the author (and comitter)
         # might want to change comitter to local git user
@@ -43,182 +44,183 @@ class spotifyUser(object):
         # get the current spotify playlists
         self.playlists = self.sp.user_playlists(username)['items']
 
-        self.tree = None;
-        self.repo = None;
+        self.tree = None
+        self.repo = None
 
-    def getPlaylistIDs(self):
+    def get_playlist_ids(self):
         ids = []
         for playlist in self.playlists:
             ids.append({"pid": playlist["id"], "uid": playlist["owner"]["id"]})
 
-        # returns a list of ids in the following format '{"pid": foo, "uid": bar}'
+        # returns a list of ids in the following format
+        # '{"pid": foo, "uid": bar}'
         return ids
 
-    def getPlaylistId(self, position):
+    def get_playlist_id(self, position):
         position = int(position)
         return {"pid": self.playlists[position]["id"], "uid": self.playlists[position]["owner"]["id"]}
 
-    def getPlaylistNames(self):
+    def get_playlist_names(self):
         names = []
         for playlist in self.playlists:
             names.append(playlist["name"])
 
         return names
 
-    def getPlaylistName(self, position):
+    def get_playlist_name(self, position):
         position = int(position)
         return self.playlists[position]["name"]
 
-    def getPlaylistTracks(self, uid, pid):
+    def get_playlist_tracks(self, uid, pid):
         playlistInfo = self.sp.user_playlist(uid, pid)["tracks"]["items"]
         return playlistInfo
 
-    def initGitPlaylist(self, uid, pid):
+    def init_git_playlist(self, uid, pid):
 
-        playlistPath = uid + "/" + pid
+        playlist_path = uid + "/" + pid
 
         # gets the track list IDs
-        trackList = self.getPlaylistTracks(uid, pid)
+        trackList = self.get_playlist_tracks(uid, pid)
 
         # make sure that the directories exist, if not create them
-        os.makedirs(self.gitDir, exist_ok=True)
-        os.makedirs(self.gitDir + playlistPath, exist_ok=True)
+        os.makedirs(self.git_dir, exist_ok=True)
+        os.makedirs(self.git_dir + playlist_path, exist_ok=True)
 
-        if os.path.isfile(self.gitDir + playlistPath + "/index.txt"):
+        if os.path.isfile(self.git_dir + playlist_path + "/index.txt"):
             raise RuntimeError("Tried to clone playlist when one of the " +
                                "same playlist has been cloned already.")
 
-        with open(self.gitDir + playlistPath + "/index.txt", "w") as textFile:
+        with open(self.git_dir + playlist_path + "/index.txt", "w") as f:
             for track in trackList:
                 if track["track"]["id"] != None:  # ignore local files
-                    print(track["track"]["id"], file=textFile)
+                    print(track["track"]["id"], file=f)
 
         # create repo and build tree
-        newRepo = pygit2.init_repository(self.gitDir + playlistPath)
-        newTree = newRepo.TreeBuilder().write()
+        new_repo = pygit2.init_repository(self.git_dir + playlist_path)
+        new_tree = new_repo.TreeBuilder().write()
 
-        firstCom = newRepo.create_commit("HEAD", self.author, self.comitter,
-                                         "Created master", newTree, [])
+        first_commit = new_repo.create_commit("HEAD", self.author, self.comitter,
+                                              "Created master", new_tree, [])
 
         # create blob for the index file
-        fileBlob = newRepo.create_blob_fromdisk(
-            self.gitDir + playlistPath + "/index.txt")
+        file_blob = new_repo.create_blob_fromdisk(
+            self.git_dir + playlist_path + "/index.txt")
 
         # build tree again
-        newTree = newRepo.TreeBuilder()
+        new_tree = new_repo.TreeBuilder()
 
         # add our new index file
-        newTree.insert("index.txt", fileBlob,
-                       os.stat(self.gitDir + playlistPath + "/index.txt").st_mode)
+        new_tree.insert("index.txt", file_blob,
+                        os.stat(self.git_dir + playlist_path + "/index.txt").st_mode)
 
         # build tree again
-        self.tree = newTree.write()
+        self.tree = new_tree.write()
 
         # add the index file to the repo
-        newRepo.index.read()
-        newRepo.index.add("index.txt")
-        newRepo.index.write()
+        new_repo.index.read()
+        new_repo.index.add("index.txt")
+        new_repo.index.write()
 
         # commit the file
-        newRepo.create_commit(
+        new_repo.create_commit(
             "HEAD", self.author, self.comitter, "Added index.txt", self.tree,
-            [firstCom])
+            [first_commit])
 
-    def addSongToPlaylist(self, uid, pid, songid):
+    def add_song_to_playlist(self, uid, pid, songid):
 
-        playlistPath = uid + "/" + pid
+        playlist_path = uid + "/" + pid
 
-        util.checkIfGitPlaylist(self.gitDir, playlistPath)
+        util.check_if_git_playlist(self.git_dir, playlist_path)
 
-        with open(self.gitDir + playlistPath + "/index.txt", "r+") as textFile:
+        with open(self.git_dir + playlist_path + "/index.txt", "r+") as f:
             songIds = []
-            for line in textFile.readlines():
+            for line in f.readlines():
                 line = line.strip()
                 songIds.append(line)
 
                 if songid == line:
                     raise RuntimeError("Song is already in playlist")
-            print(songid, file=textFile)
+            print(songid, file=f)
 
         # get the repo
-        self.repo = pygit2.Repository(self.gitDir + playlistPath)
+        self.repo = pygit2.Repository(self.git_dir + playlist_path)
 
         # create a new blob for our new index
-        fileBlob = self.repo.create_blob_fromdisk(
-            self.gitDir + playlistPath + "/index.txt")
+        file_blob = self.repo.create_blob_fromdisk(
+            self.git_dir + playlist_path + "/index.txt")
 
         # build the tree
-        newTree = self.repo.TreeBuilder()
+        new_tree = self.repo.TreeBuilder()
 
         # add the index file
-        newTree.insert("index.txt", fileBlob,
-                       os.stat(self.gitDir + playlistPath + "/index.txt").st_mode)
+        new_tree.insert("index.txt", file_blob,
+                        os.stat(self.git_dir + playlist_path + "/index.txt").st_mode)
 
-        self.tree = newTree.write()
+        self.tree = new_tree.write()
 
-    def removeSongFromPlaylist(self, uid, pid, songid):
+    def remove_song_from_playlist(self, uid, pid, songid):
 
-        playlistPath = uid + "/" + pid
+        playlist_path = uid + "/" + pid
 
-        util.checkIfGitPlaylist(self.gitDir, playlistPath)
+        util.check_if_git_playlist(self.git_dir, playlist_path)
 
-        with open(self.gitDir + playlistPath + "/index.txt", "r+") as textFile:
+        with open(self.git_dir + playlist_path + "/index.txt", "r+") as f:
             songIds = []
-            foundSong = False
-            for line in textFile.readlines():
+            found_song = False
+            for line in f.readlines():
                 line = line.strip()
 
                 if songid == line:
-                    foundSong = True
+                    found_song = True
                 else:
                     songIds.append(line)
 
-            if foundSong == False:
+            if found_song == False:
                 raise RuntimeError("playlist does not have song.")
 
             # go to the start of the text file
-            textFile.seek(0)
+            f.seek(0)
 
             for ID in songIds:
-                print(ID, file=textFile)
+                print(ID, file=f)
 
             # ignore the rest of the text file (parts that were already there)
-            textFile.truncate()
+            f.truncate()
 
-        self.repo = pygit2.Repository(self.gitDir + playlistPath)
+        self.repo = pygit2.Repository(self.git_dir + playlist_path)
 
         # create the file blob
-        fileBlob = self.repo.create_blob_fromdisk(
-            self.gitDir + playlistPath + "/index.txt")
+        file_blob = self.repo.create_blob_fromdisk(
+            self.git_dir + playlist_path + "/index.txt")
 
-        newTree = self.repo.TreeBuilder()
+        new_tree = self.repo.TreeBuilder()
 
         # insert it into the tree
-        newTree.insert("index.txt", fileBlob,
-                       os.stat(self.gitDir + playlistPath + "/index.txt").st_mode)
+        new_tree.insert("index.txt", file_blob,
+                        os.stat(self.git_dir + playlist_path + "/index.txt").st_mode)
 
-        self.tree = newTree.write()
+        self.tree = new_tree.write()
 
-    def commitChangesToPlaylist(self, uid, pid):
+    def commit_changes_to_playlist(self, uid, pid):
 
-        playlistPath = uid + "/" + pid
+        playlist_path = uid + "/" + pid
 
-        util.checkIfGitPlaylist(self.gitDir, playlistPath)
+        util.check_if_git_playlist(self.git_dir, playlist_path)
 
         # get the repo
-        self.repo = pygit2.Repository(self.gitDir + playlistPath)
+        self.repo = pygit2.Repository(self.git_dir + playlist_path)
 
         # create the file blob
-        fileBlob = self.repo.create_blob_fromdisk(
-            self.gitDir + playlistPath + "/index.txt")
+        file_blob = self.repo.create_blob_fromdisk(
+            self.git_dir + playlist_path + "/index.txt")
 
-        newTree = self.repo.TreeBuilder()
+        new_tree = self.repo.TreeBuilder()
 
         # insert it into the tree
-        newTree.insert("index.txt", fileBlob,
-                       os.stat(self.gitDir + playlistPath + "/index.txt").st_mode)
+        new_tree.insert("index.txt", file_blob,
+                        os.stat(self.git_dir + playlist_path + "/index.txt").st_mode)
 
-        self.tree = newTree.write()
+        self.tree = new_tree.write()
 
         # add to commit
         self.repo.index.read()
@@ -227,67 +229,73 @@ class spotifyUser(object):
 
         # commit changes to playlist
         self.repo.create_commit("HEAD", self.author, self.comitter,
-                           "Changes committed to " + playlistPath, self.tree, [self.repo.head.target])
+                                "Changes committed to " + playlist_path, self.tree, [self.repo.head.target])
 
-    def pullSpotifyPlaylist(self, uid, pid):
+    def pull_spotify_playlist(self, uid, pid):
 
-        palylistPath = uid + "/" + pid
+        playlist_path = uid + "/" + pid
 
-        util.checkIfGitPlaylist(self.gitDir, palylistPath)
+        util.check_if_git_playlist(self.git_dir, playlist_path)
 
         # grab tracks from spotify from pid
         results = self.sp.user_playlist_tracks(self.username, pid)
         results = results["items"]
 
         # get just a list of the track ids from the response
-        remoteTracks = []
+        remote_tracks = []
         for track in results:
-            if track["track"]["id"] != None: # only take spotify tracks
-                remoteTracks.append(track["track"]["id"])
+            if track["track"]["id"] != None:  # only take spotify tracks
+                remote_tracks.append(track["track"]["id"])
 
         # get local track ids
-        with open(self.gitDir + playlistPath + "/index.txt") as f:
-            localTracks = f.read().splitlines()
+        with open(self.git_dir + playlist_path + "/index.txt") as f:
+            local_tracks = f.read().splitlines()
 
         # merge tracks by adding if not added already. local takes precendence
         # does not preserve position of new remote tracks
         diff = False
-        for remoteTrack in remoteTracks:
-            if remoteTrack not in localTracks:
-                localTracks.append(remoteTrack)
+        for remoteTrack in remote_tracks:
+            if remoteTrack not in local_tracks:
+                local_tracks.append(remoteTrack)
                 diff = True
 
         # write tracks back to file
-        with open(self.gitDir + palylistPath + "/index.txt", "w") as f:
-            for track in localTracks:
+        with open(self.git_dir + playlist_path + "/index.txt", "w") as f:
+            for track in local_tracks:
                 print(track, file=f)
 
         # commit playlist changes if needed
         if (diff == True):
-            self.commitChangesToPlaylist(uid, pid)
+            self.commit_changes_to_playlist(uid, pid)
             return 'Added and committed changes from remote.'
         return 'No changes committed, up to date with remote.'
 
-    def songLookup(self, name=None, artist=None, limit=1):
+    def song_lookup(self, name=None, artist=None, limit=1):
         results = self.sp.search(q='track:' + name,
-            type='track',
-            limit=limit)
+                                 type='track',
+                                 limit=limit)
 
-        if len(results['tracks']['items']) == 0: # if no songs found with that name
+        # if no songs found with that name
+        if len(results['tracks']['items']) == 0:
             print("No results found for " + name)
             return
-            # not sure if we want the above to raise an error/warning or just print out
+            # not sure if we want the above to raise an error/warning or just
+            # print out
         else:
             songs = {}
             artists = results['tracks']['items'][0]['artists']
-            artistNames = []
+            artist_names = []
             for index, names in enumerate(artists):
-                artistNames.append(names['name']) # stores main artist and all the featured artists
-            songs['artists'] = artistNames
+                # stores main artist and all the featured artists
+                artist_names.append(names['name'])
+            songs['artists'] = artist_names
             songs['trackid'] = results['tracks']['items'][0]['id']
             songs['track'] = results['tracks']['items'][0]['name']
-            print("Results for " + songs['track'] + ' by ' + songs['artists'][0])
-            return songs # dictionary containing track name, artists, and track id
+            print("Results for " + songs['track'] +
+                  ' by ' + songs['artists'][0])
+
+            # dictionary containing track name, artists, and track id
+            return songs
 
 
 if __name__ == "__main__":
