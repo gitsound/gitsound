@@ -15,7 +15,7 @@ if __name__ == '__main__':
 
     config["name"] = input("name: ")
     config["email"] = input("email: ")
-    config["user_id"] = input("spotify username: ")
+    config["uid"] = input("spotify username: ")
 
     if ("client_id" not in config):
         config["client_id"] = input("client id: ")
@@ -25,10 +25,12 @@ if __name__ == '__main__':
     config["redirect_uri"] = "http://localhost/callback"
 
     user = gitSound.spotifyUser(
-        config["user_id"], config["client_id"], config["client_secret"],
+        config["uid"], config["client_id"], config["client_secret"],
         config["redirect_uri"])
 
-    config["current_pid"] = user.getPlaylistIDs()[0]
+    ids = user.getPlaylistIDs()[0]
+    config["current_playlist"]["uid"] = ids["uid"]
+    config["current_playlist"]["pid"] = ids["pid"]
 
     with open('config.json', 'w') as f:
         print(json.dumps(config, indent=4), file=f)
