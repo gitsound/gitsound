@@ -1,6 +1,7 @@
 # coding=utf-8
 from __future__ import unicode_literals, print_function
 import spotipy
+import spotipy.util
 import os
 import pygit2
 import util
@@ -42,9 +43,6 @@ class SpotifyUser(object):
 
         # get the current spotify playlists
         self.playlists = self.sp.user_playlists(username)['items']
-
-        self.tree = None
-        self.repo = None
 
     def get_playlist_ids(self):
         ids = []
@@ -113,7 +111,7 @@ class SpotifyUser(object):
                         os.stat(self.git_dir + playlist_path + "/index.txt").st_mode)
 
         # build tree again
-        self.tree = new_tree.write()
+        tree = new_tree.write()
 
         # add the index file to the repo
         new_repo.index.read()
@@ -122,7 +120,7 @@ class SpotifyUser(object):
 
         # commit the file
         new_repo.create_commit(
-            "HEAD", self.author, self.comitter, "Added index.txt", self.tree,
+            "HEAD", self.author, self.comitter, "Added index.txt", tree,
             [first_commit])
 
     def add_song_to_playlist(self, uid, pid, songid):
@@ -142,20 +140,20 @@ class SpotifyUser(object):
             print(songid, file=f)
 
         # get the repo
-        self.repo = pygit2.Repository(self.git_dir + playlist_path)
+        repo = pygit2.Repository(self.git_dir + playlist_path)
 
         # create a new blob for our new index
-        file_blob = self.repo.create_blob_fromdisk(
+        file_blob = repo.create_blob_fromdisk(
             self.git_dir + playlist_path + "/index.txt")
 
         # build the tree
-        new_tree = self.repo.TreeBuilder()
+        new_tree = repo.TreeBuilder()
 
         # add the index file
         new_tree.insert("index.txt", file_blob,
                         os.stat(self.git_dir + playlist_path + "/index.txt").st_mode)
 
-        self.tree = new_tree.write()
+        new_tree.write()
 
     def remove_song_from_playlist(self, uid, pid, songid):
 
@@ -186,19 +184,19 @@ class SpotifyUser(object):
             # ignore the rest of the text file (parts that were already there)
             f.truncate()
 
-        self.repo = pygit2.Repository(self.git_dir + playlist_path)
+        repo = pygit2.Repository(self.git_dir + playlist_path)
 
         # create the file blob
-        file_blob = self.repo.create_blob_fromdisk(
+        file_blob = repo.create_blob_fromdisk(
             self.git_dir + playlist_path + "/index.txt")
 
-        new_tree = self.repo.TreeBuilder()
+        new_tree = repo.TreeBuilder()
 
         # insert it into the tree
         new_tree.insert("index.txt", file_blob,
                         os.stat(self.git_dir + playlist_path + "/index.txt").st_mode)
 
-        self.tree = new_tree.write()
+        new_tree.write()
 
     def commit_changes_to_playlist(self, uid, pid):
 
@@ -207,28 +205,28 @@ class SpotifyUser(object):
         util.check_if_git_playlist(self.git_dir, playlist_path)
 
         # get the repo
-        self.repo = pygit2.Repository(self.git_dir + playlist_path)
+        repo = pygit2.Repository(self.git_dir + playlist_path)
 
         # create the file blob
-        file_blob = self.repo.create_blob_fromdisk(
+        file_blob = repo.create_blob_fromdisk(
             self.git_dir + playlist_path + "/index.txt")
 
-        new_tree = self.repo.TreeBuilder()
+        new_tree = repo.TreeBuilder()
 
         # insert it into the tree
         new_tree.insert("index.txt", file_blob,
                         os.stat(self.git_dir + playlist_path + "/index.txt").st_mode)
 
-        self.tree = new_tree.write()
+        tree = new_tree.write()
 
         # add to commit
-        self.repo.index.read()
-        self.repo.index.add("index.txt")
-        self.repo.index.write()
+        repo.index.read()
+        repo.index.add("index.txt")
+        repo.index.write()
 
         # commit changes to playlist
-        self.repo.create_commit("HEAD", self.author, self.comitter,
-                                "Changes committed to " + playlist_path, self.tree, [self.repo.head.target])
+        repo.create_commit("HEAD", self.author, self.comitter,
+                                "Changes committed to " + playlist_path, tree, [repo.head.target])
 
     def pull_spotify_playlist(self, uid, pid):
 
