@@ -22,6 +22,7 @@ Command List:
 from docopt import docopt
 from pygit2 import Repository
 import gitSound
+import util
 import json
 import os
 
@@ -34,15 +35,7 @@ if __name__ == '__main__':
     cmd = args['<command>']
     arg = args['<argument>']
 
-    if os.path.isfile("config.json") == False:
-        raise RuntimeError(
-            "Cannot find config.json. Ensure proper directory or run setup.py to reconfigure.")
-
-    with open("config.json") as configFile:
-        try:
-            config = json.loads(configFile.read())
-        except:
-            raise RuntimeError("Improperly formatted config.json. Run setup.py to reconfigure.")
+    config = util.loadConfig()
 
     user = gitSound.spotifyUser(
         config["uid"], config["client_id"], config["client_secret"],
@@ -70,8 +63,7 @@ if __name__ == '__main__':
         config["current_playlist"]["pid"] = ids["pid"]
         config["current_playlist"]["name"] = user.getPlaylistName(arg)
 
-        with open('config.json', 'w') as f:
-            print(json.dumps(config, indent=4), file=f)
+        util.saveConfig(config)
 
         print('Set current playlist to ' + config["current_playlist"]["name"])
     elif (cmd == 'clone' and arg != None):
@@ -80,8 +72,7 @@ if __name__ == '__main__':
         config["current_playlist"]["pid"] = ids["pid"]
         config["current_playlist"]["name"] = user.getPlaylistName(arg)
 
-        with open('config.json', 'w') as f:
-            print(json.dumps(config, indent=4), file=f)
+        util.saveConfig(config)
 
         try:
             user.initGitPlaylist(ids["uid"], ids["pid"])

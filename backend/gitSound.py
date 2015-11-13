@@ -1,9 +1,10 @@
 # coding=utf-8
 from __future__ import unicode_literals, print_function
 import spotipy
-import spotipy.util as util
+import spotipy.util
 import os
 import pygit2
+import util
 
 class spotifyUser(object):
 
@@ -26,7 +27,7 @@ class spotifyUser(object):
         self.comitter = pygit2.Signature("spotify username", "spotify email")
 
         # gets the token from the spotify api, can not do anything without this
-        self.token = util.prompt_for_user_token(
+        self.token = spotipy.util.prompt_for_user_token(
             username, client_id=client_id,
             client_secret=client_secret,
             redirect_uri=redirect_uri,
@@ -127,12 +128,7 @@ class spotifyUser(object):
 
         playlistPath = uid + "/" + pid
 
-        # make sure the directories exist
-        os.makedirs(self.gitDir, exist_ok=True)
-        os.makedirs(self.gitDir + playlistPath, exist_ok=True)
-
-        if os.path.isfile(self.gitDir + playlistPath + "/index.txt") == False:
-            raise RuntimeError("Playlist has not been initiated.")
+        util.checkIfGitPlaylist(self.gitDir, playlistPath)
 
         with open(self.gitDir + playlistPath + "/index.txt", "r+") as textFile:
             songIds = []
@@ -164,12 +160,7 @@ class spotifyUser(object):
 
         playlistPath = uid + "/" + pid
 
-        # check to see if the directories exist
-        os.makedirs(self.gitDir, exist_ok=True)
-        os.makedirs(self.gitDir + playlistPath, exist_ok=True)
-
-        if os.path.isfile(self.gitDir + playlistPath + "/index.txt") == False:
-            raise RuntimeError("Playlist has not been initiated.")
+        util.checkIfGitPlaylist(self.gitDir, playlistPath)
 
         with open(self.gitDir + playlistPath + "/index.txt", "r+") as textFile:
             songIds = []
@@ -212,6 +203,8 @@ class spotifyUser(object):
 
         playlistPath = uid + "/" + pid
 
+        util.checkIfGitPlaylist(self.gitDir, playlistPath)
+
         # get the repo
         self.repo = pygit2.Repository(self.gitDir + playlistPath)
 
@@ -240,9 +233,7 @@ class spotifyUser(object):
 
         palylistPath = uid + "/" + pid
 
-        # check if we have a git playlist before continuing
-        if not os.path.isfile(self.gitDir + playlistPath + "/index.txt"):
-            print('No git playlist found. Clone playlist first.')
+        util.checkIfGitPlaylist(self.gitDir, palylistPath)
 
         # grab tracks from spotify from pid
         results = self.sp.user_playlist_tracks(self.username, pid)
