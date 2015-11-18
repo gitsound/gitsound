@@ -12,6 +12,8 @@ if __name__ == '__main__':
                 config = json.load(f)
             except:
                 config = {}
+    else:
+        config = {}
 
     config["name"] = input("name: ")
     config["email"] = input("email: ")
@@ -29,6 +31,9 @@ if __name__ == '__main__':
         config["redirect_uri"])
 
     ids = user.get_playlist_ids()[0]
+
+    if not config.get('current_playlist'):
+        config["current_playlist"] = {}
     config["current_playlist"]["uid"] = ids["uid"]
     config["current_playlist"]["pid"] = ids["pid"]
 
