@@ -21,7 +21,8 @@ Command List:
 
 from docopt import docopt
 from pygit2 import Repository
-import gitSound
+import gitsound
+import util
 import json
 import os
 
@@ -34,19 +35,15 @@ if __name__ == '__main__':
     cmd = args['<command>']
     arg = args['<argument>']
 
-    if os.path.isfile("config.json") == False:
-        raise RuntimeError(
-            "Cannot find config.json. Ensure proper directory or run setup.py to reconfigure.")
+    config = util.load_config()
 
-    with open("config.json") as configFile:
-        try:
-            config = json.loads(configFile.read())
-        except:
-            raise RuntimeError("Improperly formatted config.json. Run setup.py to reconfigure.")
-
-    user = gitSound.spotifyUser(
-        config["user_id"], config["client_id"], config["client_secret"],
+    user = gitsound.SpotifyUser(
+        config["uid"], config["client_id"], config["client_secret"],
         config["redirect_uri"])
+
+    uid = config["current_playlist"]["uid"]
+    pid = config["current_playlist"]["pid"]
+    pname = config["current_playlist"]["name"]
 
     # Determine how to handle args
     if (cmd == 'show'):
@@ -54,48 +51,52 @@ if __name__ == '__main__':
             print('Not yet implemented.')
             print('Show all local playlists')
         elif (arg == 'remote'):
-            playlists = user.getPlaylistNames()
+            playlists = user.get_playlist_names()
             for index, playlist in enumerate(playlists):
                 print(str(index) + " |   " + playlist)
         else:
             print('Not yet implemented.')
             print('Show all playlists, local and remote')
     elif (cmd == 'select' and arg != None):
-        config["current_pid"] = user.getPlaylistId(arg)
-        config["current_pid_name"] = user.getPlaylistName(arg)
-        with open('config.json', 'w') as f:
-            print(json.dumps(config, indent=4), file=f)
+        ids = user.get_playlist_id(arg)
+        config["current_playlist"]["uid"] = ids["uid"]
+        config["current_playlist"]["pid"] = ids["pid"]
+        config["current_playlist"]["name"] = user.get_playlist_name(arg)
 
-        print('Set current playlist to ' + config["current_pid_name"])
+        util.save_config(config)
+
+        print('Set current playlist to ' + config["current_playlist"]["name"])
     elif (cmd == 'clone' and arg != None):
-        config["current_pid"] = user.getPlaylistId(arg)
-        config["current_pid_name"] = user.getPlaylistName(arg)
-        with open('config.json', 'w') as f:
-            print(json.dumps(config, indent=4), file=f)
+        ids = user.get_playlist_id(arg)
+        config["current_playlist"]["uid"] = ids["uid"]
+        config["current_playlist"]["pid"] = ids["pid"]
+        config["current_playlist"]["name"] = user.get_playlist_name(arg)
+
+        util.save_config(config)
 
         try:
-            user.initGitPlaylist(config["current_pid"])
-            print('Cloned playlist ' + config["current_pid_name"])
+            user.init_git_playlist(ids["uid"], ids["pid"])
+            print('Cloned playlist ' + config["current_playlist"]["name"])
         except:
-            print(config["current_pid_name"] + ' already cloned.')
+            print(config["current_playlist"]["name"] + ' already cloned.')
     elif (cmd == 'add' and arg != None):
-        if (not config["current_pid"]):
+        if (not pid):
             print('Select a playlist first')
         else:
-            user.addSongToPlaylist(config["current_pid"], arg)
-            print('Added track with id ' + arg + ' to ' + config["current_pid_name"])
+            user.add_song_to_playlist(uid, pid, arg)
+            print('Added track with id ' + arg + ' to ' + pname)
     elif (cmd == 'remove' and arg != None):
-        if (not config["current_pid"]):
+        if (not pid):
             print('Select a playlist first')
         else:
-            user.removeSongFromPlaylist(config["current_pid"], arg)
-            print('Removed track with id ' + arg + ' from ' + config["current_pid_name"])
+            user.remove_song_from_playlist(uid, pid, arg)
+            print('Removed track with id ' + arg + ' from ' + pname)
     elif (cmd == 'commit'):
-        user.commitChangesToPlaylist(config["current_pid"])
-        print('Committed all changes to ' + config["current_pid_name"])
+        user.commit_changes_to_playlist(uid, pid)
+        print('Committed all changes to ' + pname)
     elif (cmd == 'pull'):
-        print('On playlist ' + config["current_pid_name"] + ":")
-        print(user.pullSpotifyPlaylist(config["current_pid"]))
+        print('On playlist ' + pname + ":")
+        print(user.pull_spotify_playlist(uid, pid))
     elif (cmd == 'status'):
         print('Not yet implemented.')
         print('Show changes to commit')
