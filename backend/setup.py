@@ -36,6 +36,8 @@ if __name__ == '__main__':
         config["current_playlist"] = {}
     config["current_playlist"]["uid"] = ids["uid"]
     config["current_playlist"]["pid"] = ids["pid"]
+    config["current_playlist"]["name"] = user.get_playlist_name(0)
+
 
     with open('config.json', 'w') as f:
         print(json.dumps(config, indent=4), file=f)
