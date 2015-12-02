@@ -50,8 +50,8 @@ if __name__ == '__main__':
         if (arg == 'local'):
             git_dir = ".activePlaylists/" + user.username + "/" 
             pids = [pid for pid in os.listdir(git_dir)] # gets playlist ids from git directory
-            for pid in pids:
-                print(pid)   
+            for index, pid in enumerate(pids):
+                print(str(index) + " |   " + pid)
         elif (arg == 'remote'):
             playlists = user.get_playlist_names()
             for index, playlist in enumerate(playlists):
