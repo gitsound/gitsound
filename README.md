@@ -1,4 +1,4 @@
-# GitSound
+# GitSound ![Travis](https://travis-ci.org/GitSound/GitSound.svg?branch=show-local)
 Git for Music
 
 ## Setup
