@@ -11,7 +11,8 @@ class spotifyUser(object):
     def __init__(self, username, client_id, client_secret, redirect_uri):
         self.username = username
 
-        # add the scope for things we need, can change over time if we need less
+        # add the scope for things we need, can change over time if we need
+        # less
         scope = "playlist-read-private "
         scope += "playlist-read-collaborative "
         scope += "playlist-modify-public "
@@ -20,10 +21,10 @@ class spotifyUser(object):
         # directory that the gitfiles will be stored in
         self.gitDir = ".activePlaylists/"
 
-        # need to write more code to get the author (and committer)
-        # might want to change committer to local git user
+        # need to write more code to get the author (and comitter)
+        # might want to change comitter to local git user
         self.author = pygit2.Signature("spotify username", "spotify email")
-        self.committer = pygit2.Signature("spotify username", "spotify email")
+        self.comitter = pygit2.Signature("spotify username", "spotify email")
 
         # gets the token from the spotify api, can not do anything without this
         self.token = util.prompt_for_user_token(
@@ -88,7 +89,7 @@ class spotifyUser(object):
         newRepo = pygit2.init_repository(self.gitDir + pid)
         newTree = newRepo.TreeBuilder().write()
 
-        firstCom = newRepo.create_commit("HEAD", self.author, self.committer,
+        firstCom = newRepo.create_commit("HEAD", self.author, self.comitter,
                                          "Created master", newTree, [])
 
         # create blob for the index file
@@ -112,7 +113,7 @@ class spotifyUser(object):
 
         # commit the file
         newRepo.create_commit(
-            "HEAD", self.author, self.committer, "Added index.txt", self.tree,
+            "HEAD", self.author, self.comitter, "Added index.txt", self.tree,
             [firstCom])
 
     def addSongToPlaylist(self, pid, songid):
@@ -212,7 +213,7 @@ class spotifyUser(object):
         self.repo.index.write()
 
         # commit changes to playlist
-        self.repo.create_commit("HEAD", self.author, self.committer,
+        self.repo.create_commit("HEAD", self.author, self.comitter,
                            "Changes committed to " + pid, tree, [self.repo.head.target])
 
 
