@@ -64,6 +64,10 @@ class SpotifyUser(object):
 
         return names
 
+    def get_playlist_from_id(self, pid):
+        # returns playlist name from pid
+        return self.sp.user_playlist(self.username, pid, fields="name")
+
     def get_playlist_name(self, position):
         position = int(position)
         return self.playlists[position]["name"]

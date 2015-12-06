@@ -48,10 +48,15 @@ if __name__ == '__main__':
     # Determine how to handle args
     if (cmd == 'show'):
         if (arg == 'local'):
+            playlists = []
             git_dir = ".activePlaylists/" + user.username + "/" 
-            pids = [pid for pid in os.listdir(git_dir)] # gets playlist ids from git directory
-            for index, pid in enumerate(pids):
-                print(str(index) + " |   " + pid)
+            pids = [pid for pid in os.listdir(git_dir)] 
+            # gets playlist ids from git directory
+            for pid in pids:
+                playlist = user.get_playlist_from_id(pid)['name']
+                playlists.append(playlist)
+            for index, playlist in enumerate(playlists):
+                 print(str(index) + " |   " + playlist)
         elif (arg == 'remote'):
             playlists = user.get_playlist_names()
             for index, playlist in enumerate(playlists):
