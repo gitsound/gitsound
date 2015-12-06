@@ -1,6 +1,6 @@
 # coding=utf-8
 from __future__ import unicode_literals, print_function
-import gitSound
+import gitsound
 import sys
 import json
 import os
@@ -23,14 +23,14 @@ if __name__ == "__main__":
     with open("config.json") as configFile:
         configVars = json.loads(configFile.read())
 
-    newUser = gitSound.spotifyUser(
+    newUser = gitsound.spotifyUser(
         username, configVars["client_id"], configVars["client_secret"],
         "http://localhost/callback")
 
     playListIds = newUser.getPlaylistIDs()
 
     # # Init playlist
-    # newUser.initGitPlaylist(playListIds[6])
+    newUser.initGitPlaylist(playListIds[6])
     #
     # # add songs, commit
     # newUser.addSongToPlaylist(playListIds[6], "pop")
