@@ -53,6 +53,25 @@ class spotifyUser(object):
         # returns a list of ids in the following format '{userID}/{playlistID}'
         return ids
 
+    def get_playlist_id(self, position):
+        position = int(position)
+        return {"pid": self.playlists[position]["id"], "uid": self.playlists[position]["owner"]["id"]}
+
+    def get_playlist_names(self):
+        names = []
+        for playlist in self.playlists:
+            names.append(playlist["name"])
+
+        return names
+
+    def get_playlist_from_id(self, pid):
+        # returns playlist name from pid
+        return self.sp.user_playlist(self.username, pid, fields="name")
+
+    def get_playlist_name(self, position):
+        position = int(position)
+        return self.playlists[position]["name"]
+
     def getPlaylistTracks(self, pid):
         pid = pid.split("/")
         user = pid[0]
