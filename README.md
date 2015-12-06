@@ -64,7 +64,7 @@ options:
   -h, --help             Show this message.
 
 Command List:
-  show [local | remote]  Show all playlists locally or form spotify
+  show [local | remote]  Show all playlists locally or from spotify
   select <playlist_id>   Set the current playlist
   clone <playlist_id>    Clone a playlist from spotify
   add <track_id>         Add a track by id to the current playlist

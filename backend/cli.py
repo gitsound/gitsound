@@ -37,7 +37,7 @@ if __name__ == '__main__':
 
     config = util.load_config()
 
-    user = gitsound.SpotifyUser(
+    user = gitsound.spotifyUser(
         config["uid"], config["client_id"], config["client_secret"],
         config["redirect_uri"])
 
@@ -48,8 +48,15 @@ if __name__ == '__main__':
     # Determine how to handle args
     if (cmd == 'show'):
         if (arg == 'local'):
-            print('Not yet implemented.')
-            print('Show all local playlists')
+            playlists = []
+            git_dir = ".activePlaylists/" + user.username + "/" 
+            pids = [pid for pid in os.listdir(git_dir)] 
+            # gets playlist ids from git directory
+            for pid in pids:
+                playlist = user.get_playlist_from_id(pid)['name']
+                playlists.append(playlist)
+            for index, playlist in enumerate(playlists):
+                 print(str(index) + " |   " + playlist)
         elif (arg == 'remote'):
             playlists = user.get_playlist_names()
             for index, playlist in enumerate(playlists):
