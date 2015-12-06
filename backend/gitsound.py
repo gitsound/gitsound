@@ -276,12 +276,8 @@ class SpotifyUser(object):
                                  type='track',
                                  limit=limit)
 
-        # if no songs found with that name
         if len(results['tracks']['items']) == 0:
-            print("No results found for " + name)
-            return
-            # not sure if we want the above to raise an error/warning or just
-            # print out
+            return "No results found for " + name        
         else:
             songs = {}
             artists = results['tracks']['items'][0]['artists']
