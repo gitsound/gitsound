@@ -1,3 +1,12 @@
+"""A program to version control Spotify playlists.
+
+.. moduleauthor:: Ben Williams <ben.williams@colorado.edu>
+.. moduleauthor:: Michael Guida <michael.guida@colorado.edu>
+.. moduleauthor:: Nicole Woyarowicz <nicole.woytarowicz@colorado.edu>
+.. moduleauthor:: Kylie Dale <kylie.dale@colorado.edu>
+
+"""
+
 # coding=utf-8
 from __future__ import unicode_literals, print_function
 import gitsound
@@ -6,6 +15,9 @@ import json
 import os
 
 if __name__ == "__main__":
+    """This file is run from the command line to login to Spotify account and change playlists.
+
+    """
 
     if len(sys.argv) > 1:
         username = sys.argv[1]
@@ -30,7 +42,7 @@ if __name__ == "__main__":
     playListIds = newUser.getPlaylistIDs()
 
     # # Init playlist
-    newUser.initGitPlaylist(playListIds[6])
+    # newUser.initGitPlaylist(playListIds[6])
     #
     # # add songs, commit
     # newUser.addSongToPlaylist(playListIds[6], "pop")
