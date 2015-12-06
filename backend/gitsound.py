@@ -9,6 +9,18 @@ import pygit2
 class spotifyUser(object):
 
     def __init__(self, username, client_id, client_secret, redirect_uri):
+        """A class that creates a Spotify user "self"
+
+        :param username: Name of Spotify user
+        :type username: string 
+        :param client_id: ID given by Spotify to user
+        :type client_id: string
+        :param client_secret: Confirmation to use program
+        :type client_secret: string
+        :param redirect_uri: Another Confirmation to use program
+        :type redirect_uri: string
+
+        """
         self.username = username
 
         # add the scope for things we need, can change over time if we need less
@@ -46,33 +58,26 @@ class spotifyUser(object):
         self.repo = None;
 
     def getPlaylistIDs(self):
+        """Funtion to get playlist ids of user
+
+        :param self: Spotify user
+        :returns: list -- list of ids in following format '{userID}/{playlistID}'
+
+        """
         ids = []
         for playlist in self.playlists:
             ids.append(playlist["owner"]["id"] + "/" + playlist["id"])
 
-        # returns a list of ids in the following format '{userID}/{playlistID}'
         return ids
 
-    def get_playlist_id(self, position):
-        position = int(position)
-        return {"pid": self.playlists[position]["id"], "uid": self.playlists[position]["owner"]["id"]}
-
-    def get_playlist_names(self):
-        names = []
-        for playlist in self.playlists:
-            names.append(playlist["name"])
-
-        return names
-
-    def get_playlist_from_id(self, pid):
-        # returns playlist name from pid
-        return self.sp.user_playlist(self.username, pid, fields="name")
-
-    def get_playlist_name(self, position):
-        position = int(position)
-        return self.playlists[position]["name"]
-
     def getPlaylistTracks(self, pid):
+        """Function to get tracks from playlist ID
+
+        :param pid: Playlist ID to retrieve tracks from
+        :type pid: int 
+        :returns: list -- tracks on playlist (pid)
+
+        """
         pid = pid.split("/")
         user = pid[0]
         playId = pid[1]
@@ -86,6 +91,13 @@ class spotifyUser(object):
         return self.repo
 
     def initGitPlaylist(self, pid):
+        """Function to initialize playlist.
+
+        :param pid: Playlist ID to initialize
+        :type pid: int
+        :raises: RuntimeError
+
+        """
 
         # gets the track list IDs
         trackList = self.getPlaylistTracks(pid)
@@ -135,6 +147,15 @@ class spotifyUser(object):
             [firstCom])
 
     def addSongToPlaylist(self, pid, songid):
+        """Function to add song to playlist
+
+        :param pid: Playlist ID to add song to
+        :type pid: int
+        :param songid: ID of song to add
+        :type songid: int
+        :raises: RuntimeError
+
+        """
 
         # make sure the directories exist
         os.makedirs(self.gitDir, exist_ok=True)
@@ -174,6 +195,15 @@ class spotifyUser(object):
         self.tree = newTree.write()
 
     def removeSongFromPlaylist(self, pid, songid):
+        """Function to remove song from playlist
+
+        :param pid: Playlist ID to remove song from
+        :type pid: int
+        :param songid: ID of song to remove
+        :type songid: int
+        :raises: RuntimeError
+
+        """
 
         # check to see if the directories exist
         os.makedirs(self.gitDir, exist_ok=True)
@@ -224,6 +254,13 @@ class spotifyUser(object):
         self.tree = newTree.write()
 
     def commitChangesToPlaylist(self, pid, tree):
+        """Function to commit changes to playlist locally
+
+        :param pid: Playlist ID to commit changes to 
+        :type pid: int
+        :param tree: Tree to crete commit with 
+
+        """
         
         # add to commit 
         self.repo.index.read()
