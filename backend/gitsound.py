@@ -74,7 +74,7 @@ class spotifyUser(object):
         """Function to get tracks from playlist ID
 
         :param pid: Playlist ID to retrieve tracks from
-        :type pid: int 
+        :type pid: string 
         :returns: list -- tracks on playlist (pid)
 
         """
@@ -94,7 +94,7 @@ class spotifyUser(object):
         """Function to initialize playlist.
 
         :param pid: Playlist ID to initialize
-        :type pid: int
+        :type pid: string
         :raises: RuntimeError
 
         """
@@ -150,9 +150,9 @@ class spotifyUser(object):
         """Function to add song to playlist
 
         :param pid: Playlist ID to add song to
-        :type pid: int
+        :type pid: string
         :param songid: ID of song to add
-        :type songid: int
+        :type songid: string
         :raises: RuntimeError
 
         """
@@ -198,9 +198,9 @@ class spotifyUser(object):
         """Function to remove song from playlist
 
         :param pid: Playlist ID to remove song from
-        :type pid: int
+        :type pid: string
         :param songid: ID of song to remove
-        :type songid: int
+        :type songid: string
         :raises: RuntimeError
 
         """
@@ -257,8 +257,8 @@ class spotifyUser(object):
         """Function to commit changes to playlist locally
 
         :param pid: Playlist ID to commit changes to 
-        :type pid: int
-        :param tree: Tree to crete commit with 
+        :type pid: string
+        :param tree: tree to crete commit with 
 
         """
         
