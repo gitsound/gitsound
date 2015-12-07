@@ -10,7 +10,7 @@ def validate_user(username, password):
     :returns: boolean -- true if user is valid, false otherwise
     """
 
-    conn = sqlite3.connect('gitsound.sqlite')
+    conn = sqlite3.connect('./.gitsound.sqlite')
     c = conn.cursor()
 
     c.execute("SELECT * FROM {tn} WHERE {uf} = ?".

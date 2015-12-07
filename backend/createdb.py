@@ -4,7 +4,7 @@
 import sqlite3
 
 # Connecting to the database file
-conn = sqlite3.connect('gitsound.sqlite')
+conn = sqlite3.connect('./.gitsound.sqlite')
 c = conn.cursor()
 
 # Creating a new SQLite table with 1 column
