@@ -1,11 +1,5 @@
 #! /usr/bin/env python
-"""A CLI to version control Spotify playlists.
-
-.. moduleauthor:: Ben Williams <ben.williams@colorado.edu>
-.. moduleauthor:: Michael Guida <michael.guida@colorado.edu>
-.. moduleauthor:: Nicole Woyarowicz <nicole.woytarowicz@colorado.edu>
-.. moduleauthor:: Kylie Dale <kylie.dale@colorado.edu>
-
+"""
 GitSound
 
 Usage:
@@ -43,7 +37,7 @@ if __name__ == '__main__':
 
     config = util.load_config()
 
-    user = gitsound.spotifyUser(
+    user = gitsound.SpotifyUser(
         config["uid"], config["client_id"], config["client_secret"],
         config["redirect_uri"])
 

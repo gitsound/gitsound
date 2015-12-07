@@ -1,3 +1,13 @@
+"""A program to version control Spotify playlists.
+
+.. moduleauthor:: Ben Williams <ben.williams@colorado.edu>
+.. moduleauthor:: Michael Guida <michael.guida@colorado.edu>
+.. moduleauthor:: Nicole Woyarowicz <nicole.woytarowicz@colorado.edu>
+.. moduleauthor:: Kylie Dale <kylie.dale@colorado.edu>
+
+"""
+
+
 # coding=utf-8
 from __future__ import unicode_literals, print_function
 import spotipy
