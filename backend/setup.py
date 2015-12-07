@@ -1,5 +1,13 @@
 #! /usr/bin/env python
 
+"""File that sets up a user's system upon running command line. 
+
+Only need to run this file once when initally setting up GitSound.
+
+.. note:: 
+    User will need to obtain a client_id and client_secret from Spotify.
+
+"""
 from pygit2 import Repository
 import gitsound
 import json

@@ -3,6 +3,12 @@ import os
 
 
 def load_config():
+    """Function to load the config file
+
+    :returns: the config file
+    :raises: RuntimeError
+
+    """
     if os.path.isfile("config.json") == False:
         raise RuntimeError(
             "Cannot find config.json. Ensure proper directory or run setup.py to reconfigure.")
@@ -18,6 +24,11 @@ def load_config():
 
 
 def save_config(data):
+    """Function to save the config file
+
+    :raises: RuntimeError
+
+    """
     if os.path.isfile("config.json") == False:
         raise RuntimeError(
             "Cannot find config.json. Ensure proper directory or run setup.py to reconfigure.")
@@ -27,6 +38,11 @@ def save_config(data):
 
 
 def check_if_git_playlist(gitDir, playlistPath):
+    """Function to check if playlist path is valid
+
+    :raises: RuntimeError
+
+    """
 
     # make sure the directories exist
     os.makedirs(gitDir, exist_ok=True)

@@ -1,3 +1,6 @@
+"""File that runs tests against GitSound.
+
+"""
 # coding=utf-8
 from __future__ import unicode_literals, print_function
 import gitSound
@@ -8,8 +11,14 @@ import unittest
 
 
 class test_spotifyUser(unittest.TestCase):
+    """This class runs tests against the spotifyUser.
+
+    """
 
     def setUp(self):
+        """Function that sets up config file and checks vailidity of username.
+
+        """
 
         if os.path.isfile("test_config.txt") == False:
             raise RuntimeError(
@@ -30,9 +39,15 @@ class test_spotifyUser(unittest.TestCase):
             self.configVars = json.loads(configFile.read())
 
     def tearDown(self):
+        """Function that is called when tests fail.
+
+        """
         print("tearing down...")
 
     def test_init(self):
+        """TestCase run against playlist initalization.
+
+        """
 
         newUser = gitSound.spotifyUser(
             self.testVars["username"], self.configVars[
@@ -48,6 +63,11 @@ class test_spotifyUser(unittest.TestCase):
         self.spotifyUser = newUser
 
     def test_getPlaylistIDs(self):
+        """TestCase to test playlist ID retrieval.
+
+        Tests to make sure the function returns a list of playlist IDs and tests to ensure the list has two parts.
+
+        """
 
         newUser = gitSound.spotifyUser(
             self.testVars["username"], self.configVars[
