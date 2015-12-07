@@ -1,5 +1,5 @@
 .. GitSound documentation master file, created by
-   sphinx-quickstart on Mon Dec  7 14:13:17 2015.
+   sphinx-quickstart on Mon Dec  7 16:49:00 2015.
    You can adapt this file completely to your liking, but it should at least
    contain the root `toctree` directive.
 
@@ -10,6 +10,8 @@ Contents:
 
 .. toctree::
    :maxdepth: 2
+
+   code
 
 
 

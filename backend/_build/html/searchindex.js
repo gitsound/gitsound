@@ -1,0 +1,1 @@
+Search.setIndex({envversion:46,filenames:["code","index"],objects:{},objnames:{},objtypes:{},terms:{content:1,index:1,modul:1,page:1,search:1},titles:["Auto Generated Documentation","Welcome to GitSound&#8217;s documentation!"],titleterms:{auto:0,document:[0,1],gener:0,gitsound:1,indic:1,tabl:1,welcom:1}})
