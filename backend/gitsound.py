@@ -23,7 +23,7 @@ class SpotifyUser(object):
         """A class that creates a Spotify user "self"
 
         :param username: Name of Spotify user
-        :type username: string 
+        :type username: string
         :param client_id: ID given by Spotify to user
         :type client_id: string
         :param client_secret: Confirmation to use program
@@ -329,7 +329,7 @@ class SpotifyUser(object):
 
         # commit changes to playlist
         repo.create_commit("HEAD", self.author, self.comitter,
-                                "Changes committed to " + playlist_path, tree, [repo.head.target])
+                           "Changes committed to " + playlist_path, tree, [repo.head.target])
 
     def pull_spotify_playlist(self, uid, pid):
         """Function to pull playlist from Spotify
@@ -380,7 +380,7 @@ class SpotifyUser(object):
         return 'No changes committed, up to date with remote.'
 
     def song_lookup(self, name=None, artist=None, limit=1):
-        """Function to look up song 
+        """Function to look up song
 
         :param name: name of song
         :type name: string
@@ -396,7 +396,7 @@ class SpotifyUser(object):
                                  limit=limit)
 
         if len(results['tracks']['items']) == 0:
-            return "No results found for " + name        
+            return "No results found for " + name
         else:
             songs = {}
             artists = results['tracks']['items'][0]['artists']
@@ -407,8 +407,6 @@ class SpotifyUser(object):
             songs['artists'] = artist_names
             songs['trackid'] = results['tracks']['items'][0]['id']
             songs['track'] = results['tracks']['items'][0]['name']
-            print("Results for " + songs['track'] +
-                  ' by ' + songs['artists'][0])
 
             # dictionary containing track name, artists, and track id
             return songs

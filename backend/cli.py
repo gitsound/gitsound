@@ -9,14 +9,15 @@ options:
   -h, --help             Show this message.
 
 Command List:
-  show [local | remote]  Show all playlists locally or form spotify
-  select <playlist_id>   Set the current playlist
-  clone <playlist_id>    Clone a playlist from spotify
-  add <track_id>         Add a track by id to the current playlist
-  remove <track_id>      Remove a track by id from the current playlist
-  pull                   Pull changes from spotify into current playlist
-  status                 See all changes to be committed
-  commit                 Commit all changes
+  show [local | remote]    Show all playlists locally or form spotify
+  select <playlist_id>     Set the current playlist
+  clone <playlist_id>      Clone a playlist from spotify
+  add <track_id>           Add a track by id to the current playlist
+  remove <track_id>        Remove a track by id from the current playlist
+  search <track>  Search for id of song on spotify
+  pull                     Pull changes from spotify into current playlist
+  status                   See all changes to be committed
+  commit                   Commit all changes
 """
 
 from docopt import docopt
@@ -49,14 +50,14 @@ if __name__ == '__main__':
     if (cmd == 'show'):
         if (arg == 'local'):
             playlists = []
-            git_dir = ".activePlaylists/" + user.username + "/" 
-            pids = [pid for pid in os.listdir(git_dir)] 
+            git_dir = ".activePlaylists/" + user.username + "/"
+            pids = [pid for pid in os.listdir(git_dir)]
             # gets playlist ids from git directory
             for pid in pids:
                 playlist = user.get_playlist_from_id(pid)['name']
                 playlists.append(playlist)
             for index, playlist in enumerate(playlists):
-                 print(str(index) + " |   " + playlist)
+                print(str(index) + " |   " + playlist)
         elif (arg == 'remote'):
             playlists = user.get_playlist_names()
             for index, playlist in enumerate(playlists):
@@ -107,5 +108,11 @@ if __name__ == '__main__':
     elif (cmd == 'status'):
         print('Not yet implemented.')
         print('Show changes to commit')
+    elif (cmd == 'search' and arg != None):
+        search = user.song_lookup(name=arg)
+        print('Track: ' + search["track"])
+        # for now only print first artist
+        print('Artist: ' + search["artists"][0])
+        print('Track ID: ' + search["trackid"])
     else:
         print('Usage: cli.py <command> [<argument>]')
