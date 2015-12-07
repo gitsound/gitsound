@@ -1,5 +1,11 @@
 #! /usr/bin/env python
-"""
+"""A CLI to version control Spotify playlists.
+
+.. moduleauthor:: Ben Williams <ben.williams@colorado.edu>
+.. moduleauthor:: Michael Guida <michael.guida@colorado.edu>
+.. moduleauthor:: Nicole Woyarowicz <nicole.woytarowicz@colorado.edu>
+.. moduleauthor:: Kylie Dale <kylie.dale@colorado.edu>
+
 GitSound
 
 Usage:
