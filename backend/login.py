@@ -2,6 +2,14 @@ import sqlite3
 
 
 def validate_user(username, password):
+    """Function to validate or create a user.
+    :param username: username
+    :type username: string
+    :param password: password
+    :type password: string
+    :returns: boolean -- true if user is valid, false otherwise
+    """
+
     conn = sqlite3.connect('gitsound.sqlite')
     c = conn.cursor()
 
