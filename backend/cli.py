@@ -37,7 +37,7 @@ if __name__ == '__main__':
 
     config = util.load_config()
 
-    user = gitsound.spotifyUser(
+    user = gitsound.SpotifyUser(
         config["uid"], config["client_id"], config["client_secret"],
         config["redirect_uri"])
 
