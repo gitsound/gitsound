@@ -105,7 +105,7 @@ Generate pdf file: GitSound.pdf (backend/_build/latex)
 [Sphinx (html)](https://github.com/GitSound/GitSound/blob/autodoc/backend/_build/html/code.html)
 
 ## Continuous Integration
-[Travis](https://travis-ci.org/GitSound/GitSound)
+[Travis CI](https://travis-ci.org/GitSound/GitSound)
 
 # License
 MIT
