@@ -89,7 +89,10 @@ $ python3 cli.py select 0
 Set current playlist to Rock
 ```
 
-#### Auto-documentation: [Sphinx](https://github.com/GitSound/GitSound/blob/autodoc/backend/_build/latex/GitSound.pdf)
+#### Auto-documentation: 
+[Sphinx (pdf)](https://github.com/GitSound/GitSound/blob/autodoc/backend/_build/latex/GitSound.pdf)
+
+[Sphinx (html)](https://github.com/GitSound/GitSound/blob/autodoc/backend/_build/html/code.html)
 
 # License
 MIT
