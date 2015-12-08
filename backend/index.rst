@@ -3,19 +3,24 @@
    You can adapt this file completely to your liking, but it should at least
    contain the root `toctree` directive.
 
-GitSound documentation
+GitSound Documentation
 ====================================
+
+A program to version control Spotify playlists.
 
 Contents:
 
 .. toctree::
    :maxdepth: 2
 
-   code.rst
+.. automodule:: gitsound
+   :members:
 
+.. automodule:: util
+   :members:
+   
 Indices and tables
 ==================
 
 * :ref:`genindex`
-* :ref:`search`
 

@@ -1,7 +1,6 @@
-This is pdfTeX, Version 3.14159265-2.6-1.40.16 (TeX Live 2015) (preloaded format=pdflatex 2015.5.24)  7 DEC 2015 17:12
+This is pdfTeX, Version 3.14159265-2.6-1.40.16 (TeX Live 2015) (preloaded format=pdflatex 2015.5.24)  7 DEC 2015 17:23
 entering extended mode
  restricted \write18 enabled.
- file:line:error style messages enabled.
  %&-line parsing enabled.
 **GitSound.tex
 (./GitSound.tex
@@ -813,7 +812,7 @@ Package: float 2001/11/08 v1.3d Float enhancements (AL)
 
 
 Writing index file GitSound.idx
-No file GitSound.aux.
+(./GitSound.aux)
 \openout1 = `GitSound.aux'.
 
 LaTeX Font Info:    Checking defaults for OML/cmm/m/it on input line 125.
@@ -831,7 +830,7 @@ LaTeX Font Info:    ... okay on input line 125.
 LaTeX Font Info:    Checking defaults for TS1/cmr/m/n on input line 125.
 LaTeX Font Info:    Try loading font information for TS1+cmr on input line 125.
 
-(/usr/local/texlive/2015/texmf-dist/tex/latex/base/ts1cmr.fd
+ (/usr/local/texlive/2015/texmf-dist/tex/latex/base/ts1cmr.fd
 File: ts1cmr.fd 2014/09/29 v2.5h Standard LaTeX font definitions
 )
 LaTeX Font Info:    ... okay on input line 125.
@@ -884,6 +883,8 @@ Package: gettitlestring 2010/12/03 v1.4 Cleanup title references (HO)
 LaTeX Info: Redefining \ref on input line 125.
 LaTeX Info: Redefining \pageref on input line 125.
 LaTeX Info: Redefining \nameref on input line 125.
+
+(./GitSound.out) (./GitSound.out)
 \@outlinefile=\write6
 \openout6 = `GitSound.out'.
 
@@ -916,7 +917,10 @@ Overfull \hbox (37.96696pt too wide) in paragraph at lines 128--128
 {/usr/local/texlive/2015/texmf-var/fonts/map/pdftex/updmap/pdftex.map}]
 [2
 
-]
+] (./GitSound.toc
+LaTeX Font Info:    Font shape `T1/ptm/bx/n' in size <10> not available
+(Font)              Font shape `T1/ptm/b/n' tried instead on input line 2.
+)
 \tf@toc=\write7
 \openout7 = `GitSound.toc'.
 
@@ -926,82 +930,69 @@ LaTeX Font Info:    Font shape `T1/phv/bx/n' in size <10> not available
 (Font)              Font shape `T1/phv/b/n' tried instead on input line 128.
 [1
 
-] [2] [1
-
-] [2
-
-]
-Chapter 1.
-LaTeX Font Info:    Font shape `T1/phv/bx/n' in size <14.4> not available
-(Font)              Font shape `T1/phv/b/n' tried instead on input line 135.
-LaTeX Font Info:    Font shape `T1/ptm/bx/n' in size <14.4> not available
-(Font)              Font shape `T1/ptm/b/n' tried instead on input line 135.
-LaTeX Font Info:    Font shape `T1/ptm/bx/n' in size <24.88> not available
-(Font)              Font shape `T1/ptm/b/n' tried instead on input line 135.
-LaTeX Font Info:    Font shape `T1/ptm/bx/n' in size <10> not available
-(Font)              Font shape `T1/ptm/b/n' tried instead on input line 141.
-LaTeX Font Info:    Try loading font information for T1+pcr on input line 141.
-(/usr/local/texlive/2015/texmf-dist/tex/latex/psnfss/t1pcr.fd
+] [2]
+LaTeX Font Info:    Try loading font information for T1+pcr on input line 138.
+ (/usr/local/texlive/2015/texmf-dist/tex/latex/psnfss/t1pcr.fd
 File: t1pcr.fd 2001/06/04 font definitions for T1/pcr.
 )
 LaTeX Font Info:    Font shape `T1/pcr/bx/n' in size <10> not available
-(Font)              Font shape `T1/pcr/b/n' tried instead on input line 141.
-LaTeX Font Info:    Try loading font information for TS1+ptm on input line 150.
+(Font)              Font shape `T1/pcr/b/n' tried instead on input line 138.
+LaTeX Font Info:    Try loading font information for TS1+ptm on input line 147.
 
 
 (/usr/local/texlive/2015/texmf-dist/tex/latex/psnfss/ts1ptm.fd
 File: ts1ptm.fd 2001/06/04 font definitions for TS1/ptm.
-) [3] [4]
-[5] [6
+) [1
+
+] [2]
+Chapter 1.
+LaTeX Font Info:    Font shape `T1/phv/bx/n' in size <14.4> not available
+(Font)              Font shape `T1/phv/b/n' tried instead on input line 424.
+LaTeX Font Info:    Font shape `T1/ptm/bx/n' in size <14.4> not available
+(Font)              Font shape `T1/ptm/b/n' tried instead on input line 424.
+LaTeX Font Info:    Font shape `T1/ptm/bx/n' in size <24.88> not available
+(Font)              Font shape `T1/ptm/b/n' tried instead on input line 424.
+[3
+
+] [4
+
+] [5
+
+
+] (./GitSound.ind [6
+
 
 ]
-Chapter 2.
-[7] [8
-
-]
-
-LaTeX Warning: Reference `code:module-gitsound' on page 9 undefined on input li
-ne 442.
+Underfull \hbox (badness 10000) in paragraph at lines 10--11
+[]\T1/ptm/m/n/10 commit_changes_to_playlist() (git-sound.SpotifyUser
+ []
 
 
-LaTeX Warning: Reference `code:module-util' on page 9 undefined on input line 4
-45.
+Underfull \hbox (badness 10000) in paragraph at lines 36--37
+[]\T1/ptm/m/n/10 remove_song_from_playlist() (git-sound.SpotifyUser
+ []
 
-[9
-
-
-]
-No file GitSound.ind.
-Package atveryend Info: Empty hook `BeforeClearDocument' on input line 450.
-Package atveryend Info: Empty hook `AfterLastShipout' on input line 450.
-(./GitSound.aux)
-Package atveryend Info: Executing hook `AtVeryEndDocument' on input line 450.
-Package atveryend Info: Executing hook `AtEndAfterFileList' on input line 450.
+[7
 
 
-Package rerunfilecheck Warning: File `GitSound.out' has changed.
-(rerunfilecheck)                Rerun to get outlines right
-(rerunfilecheck)                or use package `bookmark'.
-
-Package rerunfilecheck Info: Checksums for `GitSound.out':
-(rerunfilecheck)             Before: <no file>
-(rerunfilecheck)             After:  EA9612D380011327EDFDF24291255EB4;167.
-
-LaTeX Warning: There were undefined references.
-
-
-LaTeX Warning: Label(s) may have changed. Rerun to get cross-references right.
-
-Package atveryend Info: Empty hook `AtVeryVeryEnd' on input line 450.
+])
+Package atveryend Info: Empty hook `BeforeClearDocument' on input line 444.
+Package atveryend Info: Empty hook `AfterLastShipout' on input line 444.
+ (./GitSound.aux)
+Package atveryend Info: Executing hook `AtVeryEndDocument' on input line 444.
+Package atveryend Info: Executing hook `AtEndAfterFileList' on input line 444.
+Package rerunfilecheck Info: File `GitSound.out' has not changed.
+(rerunfilecheck)             Checksum: BB405E940F0AB9BAC65EBBEC217AC53C;151.
+Package atveryend Info: Empty hook `AtVeryVeryEnd' on input line 444.
  ) 
 Here is how much of TeX's memory you used:
- 9157 strings out of 493089
- 128290 string characters out of 6134842
- 231031 words of memory out of 5000000
- 12373 multiletter control sequences out of 15000+600000
+ 9168 strings out of 493089
+ 128449 string characters out of 6134842
+ 231665 words of memory out of 5000000
+ 12375 multiletter control sequences out of 15000+600000
  53038 words of font info for 58 fonts, out of 8000000 for 9000
  1142 hyphenation exceptions out of 8191
- 36i,11n,45p,294b,528s stack positions out of 5000i,500n,10000p,200000b,80000s
+ 36i,11n,45p,295b,631s stack positions out of 5000i,500n,10000p,200000b,80000s
 {/usr/local/texlive/2015/texmf-dist/fonts/enc/dvips/base/8r.enc}</usr/local/t
 exlive/2015/texmf-dist/fonts/type1/urw/courier/ucrb8a.pfb></usr/local/texlive/2
 015/texmf-dist/fonts/type1/urw/courier/ucrr8a.pfb></usr/local/texlive/2015/texm
@@ -1011,10 +1002,10 @@ type1/urw/helvetic/uhvr8a.pfb></usr/local/texlive/2015/texmf-dist/fonts/type1/u
 rw/times/utmb8a.pfb></usr/local/texlive/2015/texmf-dist/fonts/type1/urw/times/u
 tmr8a.pfb></usr/local/texlive/2015/texmf-dist/fonts/type1/urw/times/utmri8a.pfb
 >
-Output written on GitSound.pdf (13 pages, 86202 bytes).
+Output written on GitSound.pdf (11 pages, 88490 bytes).
 PDF statistics:
- 131 PDF objects out of 1000 (max. 8388607)
- 101 compressed objects within 2 object streams
- 36 named destinations out of 1000 (max. 500000)
- 21 words of extra memory for PDF output out of 10000 (max. 10000000)
+ 156 PDF objects out of 1000 (max. 8388607)
+ 128 compressed objects within 2 object streams
+ 35 named destinations out of 1000 (max. 500000)
+ 45 words of extra memory for PDF output out of 10000 (max. 10000000)
 

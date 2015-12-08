@@ -1,18 +1,18 @@
-\indexentry{gitsound (module)|hyperpage}{3}
-\indexentry{SpotifyUser (class in gitsound)|hyperpage}{3}
-\indexentry{add\_song\_to\_playlist() (gitsound.SpotifyUser method)|hyperpage}{3}
-\indexentry{commit\_changes\_to\_playlist() (gitsound.SpotifyUser method)|hyperpage}{3}
-\indexentry{get\_playlist\_from\_id() (gitsound.SpotifyUser method)|hyperpage}{3}
-\indexentry{get\_playlist\_id() (gitsound.SpotifyUser method)|hyperpage}{3}
-\indexentry{get\_playlist\_ids() (gitsound.SpotifyUser method)|hyperpage}{3}
-\indexentry{get\_playlist\_name() (gitsound.SpotifyUser method)|hyperpage}{3}
-\indexentry{get\_playlist\_names() (gitsound.SpotifyUser method)|hyperpage}{4}
-\indexentry{get\_playlist\_tracks() (gitsound.SpotifyUser method)|hyperpage}{4}
-\indexentry{init\_git\_playlist() (gitsound.SpotifyUser method)|hyperpage}{4}
-\indexentry{pull\_spotify\_playlist() (gitsound.SpotifyUser method)|hyperpage}{4}
-\indexentry{remove\_song\_from\_playlist() (gitsound.SpotifyUser method)|hyperpage}{4}
-\indexentry{song\_lookup() (gitsound.SpotifyUser method)|hyperpage}{4}
-\indexentry{util (module)|hyperpage}{4}
-\indexentry{check\_if\_git\_playlist() (in module util)|hyperpage}{4}
-\indexentry{load\_config() (in module util)|hyperpage}{5}
-\indexentry{save\_config() (in module util)|hyperpage}{5}
+\indexentry{gitsound (module)|hyperpage}{1}
+\indexentry{SpotifyUser (class in gitsound)|hyperpage}{1}
+\indexentry{add\_song\_to\_playlist() (gitsound.SpotifyUser method)|hyperpage}{1}
+\indexentry{commit\_changes\_to\_playlist() (gitsound.SpotifyUser method)|hyperpage}{1}
+\indexentry{get\_playlist\_from\_id() (gitsound.SpotifyUser method)|hyperpage}{1}
+\indexentry{get\_playlist\_id() (gitsound.SpotifyUser method)|hyperpage}{1}
+\indexentry{get\_playlist\_ids() (gitsound.SpotifyUser method)|hyperpage}{1}
+\indexentry{get\_playlist\_name() (gitsound.SpotifyUser method)|hyperpage}{1}
+\indexentry{get\_playlist\_names() (gitsound.SpotifyUser method)|hyperpage}{1}
+\indexentry{get\_playlist\_tracks() (gitsound.SpotifyUser method)|hyperpage}{1}
+\indexentry{init\_git\_playlist() (gitsound.SpotifyUser method)|hyperpage}{2}
+\indexentry{pull\_spotify\_playlist() (gitsound.SpotifyUser method)|hyperpage}{2}
+\indexentry{remove\_song\_from\_playlist() (gitsound.SpotifyUser method)|hyperpage}{2}
+\indexentry{song\_lookup() (gitsound.SpotifyUser method)|hyperpage}{2}
+\indexentry{util (module)|hyperpage}{2}
+\indexentry{check\_if\_git\_playlist() (in module util)|hyperpage}{2}
+\indexentry{load\_config() (in module util)|hyperpage}{2}
+\indexentry{save\_config() (in module util)|hyperpage}{2}
