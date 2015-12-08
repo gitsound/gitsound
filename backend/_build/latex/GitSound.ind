@@ -1,0 +1,48 @@
+\begin{theindex}
+\def\bigletter#1{{\Large\sffamily#1}\nopagebreak\vspace{1mm}}
+
+  \bigletter A
+  \item add\_song\_to\_playlist() (gitsound.SpotifyUser method), \hyperpage{1}
+
+  \indexspace
+  \bigletter C
+  \item check\_if\_git\_playlist() (in module util), \hyperpage{2}
+  \item commit\_changes\_to\_playlist() (gitsound.SpotifyUser method), \hyperpage{1}
+
+  \indexspace
+  \bigletter G
+  \item get\_playlist\_from\_id() (gitsound.SpotifyUser method), \hyperpage{1}
+  \item get\_playlist\_id() (gitsound.SpotifyUser method), \hyperpage{1}
+  \item get\_playlist\_ids() (gitsound.SpotifyUser method), \hyperpage{1}
+  \item get\_playlist\_name() (gitsound.SpotifyUser method), \hyperpage{1}
+  \item get\_playlist\_names() (gitsound.SpotifyUser method), \hyperpage{1}
+  \item get\_playlist\_tracks() (gitsound.SpotifyUser method), \hyperpage{1}
+  \item gitsound (module), \hyperpage{1}
+
+  \indexspace
+  \bigletter I
+  \item init\_git\_playlist() (gitsound.SpotifyUser method), \hyperpage{2}
+
+  \indexspace
+  \bigletter L
+  \item load\_config() (in module util), \hyperpage{2}
+
+  \indexspace
+  \bigletter P
+  \item pull\_spotify\_playlist() (gitsound.SpotifyUser method), \hyperpage{2}
+
+  \indexspace
+  \bigletter R
+  \item remove\_song\_from\_playlist() (gitsound.SpotifyUser method), \hyperpage{2}
+
+  \indexspace
+  \bigletter S
+  \item save\_config() (in module util), \hyperpage{2}
+  \item song\_lookup() (gitsound.SpotifyUser method), \hyperpage{2}
+  \item SpotifyUser (class in gitsound), \hyperpage{1}
+
+  \indexspace
+  \bigletter U
+  \item util (module), \hyperpage{2}
+
+\end{theindex}

@@ -1,3 +1,12 @@
+"""
+.. moduleauthor:: Ben Williams <ben.williams@colorado.edu>
+.. moduleauthor:: Michael Guida <michael.guida@colorado.edu>
+.. moduleauthor:: Nicole Woyarowicz <nicole.woytarowicz@colorado.edu>
+.. moduleauthor:: Kylie Dale <kylie.dale@colorado.edu>
+
+"""
+
+
 # coding=utf-8
 from __future__ import unicode_literals, print_function
 import spotipy
@@ -8,8 +17,24 @@ import util
 
 
 class SpotifyUser(object):
+    """
+    A class that creates a Spotify user "self"
+    """
 
     def __init__(self, username, client_id, client_secret, redirect_uri):
+        """
+        A class that creates a Spotify user "self"
+
+        :param username: Name of Spotify user
+        :type username: string
+        :param client_id: ID given by Spotify to user
+        :type client_id: string
+        :param client_secret: Confirmation to use program
+        :type client_secret: string
+        :param redirect_uri: Another Confirmation to use program
+        :type redirect_uri: string
+
+        """
         self.username = username
 
         # add the scope for things we need, can change over time if we need
@@ -45,19 +70,35 @@ class SpotifyUser(object):
         self.playlists = self.sp.user_playlists(username)['items']
 
     def get_playlist_ids(self):
+        """Funtion to get playlist ids of user
+
+        :param self: Spotify user
+        :returns: list -- list of ids in following format ''{"pid": foo, "uid": bar}''
+
+        """
         ids = []
         for playlist in self.playlists:
             ids.append({"pid": playlist["id"], "uid": playlist["owner"]["id"]})
 
-        # returns a list of ids in the following format
-        # '{"pid": foo, "uid": bar}'
         return ids
 
     def get_playlist_id(self, position):
+        """Function to get a single playlist's ID
+
+        :param position: specifies what playlist to get
+        :type position: string
+        :returns: ID in following format '{"pid": foo, "uid": bar}'
+
+        """
         position = int(position)
         return {"pid": self.playlists[position]["id"], "uid": self.playlists[position]["owner"]["id"]}
 
     def get_playlist_names(self):
+        """Function to get all playlist names
+
+        :returns: list -- of playlist names
+
+        """
         names = []
         for playlist in self.playlists:
             names.append(playlist["name"])
@@ -65,18 +106,49 @@ class SpotifyUser(object):
         return names
 
     def get_playlist_from_id(self, pid):
-        # returns playlist name from pid
+        """Function that returns playlist name from pid
+
+        :param pid: playlist ID
+        :type pid: string
+        :returns: playlist name
+
+        """
         return self.sp.user_playlist(self.username, pid, fields="name")
 
     def get_playlist_name(self, position):
+        """Function that returns playlist name from position
+
+        :param position: specifies what playlist to get name from
+        :type position: string
+        :returns: playlist name
+
+        """
         position = int(position)
         return self.playlists[position]["name"]
 
     def get_playlist_tracks(self, uid, pid):
+        """Function to get tracks from pid
+
+        :param uid: user ID
+        :type uid: string
+        :param pid: playlist ID
+        :type pid: string
+        :returns: list -- tracks on playlist corresponding to pid
+
+        """
         playlistInfo = self.sp.user_playlist(uid, pid)["tracks"]["items"]
         return playlistInfo
 
     def init_git_playlist(self, uid, pid):
+        """Function to initialize playlist.
+
+        :param uid: user ID
+        :type uid: string
+        :param pid: playlist ID to initialize
+        :type pid: string
+        :raises: RuntimeError
+
+        """
 
         playlist_path = uid + "/" + pid
 
@@ -128,6 +200,17 @@ class SpotifyUser(object):
             [first_commit])
 
     def add_song_to_playlist(self, uid, pid, songid):
+        """Function to add song to playlist
+
+        :param uid: user ID
+        :type uid: string
+        :param pid: playlist ID to add song to
+        :type pid: string
+        :param songid: ID of song to add
+        :type songid: string
+        :raises: RuntimeError
+
+        """
 
         playlist_path = uid + "/" + pid
 
@@ -160,6 +243,17 @@ class SpotifyUser(object):
         new_tree.write()
 
     def remove_song_from_playlist(self, uid, pid, songid):
+        """Function to remove song from playlist
+
+        :param uid: user ID
+        :type uid: string
+        :param pid: playlist ID to remove song from
+        :type pid: string
+        :param songid: ID of song to remove
+        :type songid: string
+        :raises: RuntimeError
+
+        """
 
         playlist_path = uid + "/" + pid
 
@@ -203,6 +297,14 @@ class SpotifyUser(object):
         new_tree.write()
 
     def commit_changes_to_playlist(self, uid, pid):
+        """Function to commit changes to playlist
+
+        :param uid: user ID
+        :type uid: string
+        :param pid: playlist ID
+        :type pid: string
+
+        """
 
         playlist_path = uid + "/" + pid
 
@@ -230,9 +332,18 @@ class SpotifyUser(object):
 
         # commit changes to playlist
         repo.create_commit("HEAD", self.author, self.comitter,
-                                "Changes committed to " + playlist_path, tree, [repo.head.target])
+                           "Changes committed to " + playlist_path, tree, [repo.head.target])
 
     def pull_spotify_playlist(self, uid, pid):
+        """Function to pull playlist from Spotify
+
+        :param uid: user ID
+        :type uid: string
+        :param pid: playlist ID
+        :type pid: string
+        :returns: string -- stating status of pull (either successfull or not)
+
+        """
 
         playlist_path = uid + "/" + pid
 
@@ -266,18 +377,76 @@ class SpotifyUser(object):
                 print(track, file=f)
 
         # commit playlist changes if needed
-        if (diff == True):
+        if diff:
             self.commit_changes_to_playlist(uid, pid)
             return 'Added and committed changes from remote.'
         return 'No changes committed, up to date with remote.'
 
+    def push_spotify_playlist(self, uid, pid):
+        """Function to push playlist to Spotify
+
+        :param uid: user ID
+        :type uid: string
+        :param pid: playlist ID
+        :type pid: string
+        :returns: string -- stating status of pull (either successfull or not)
+
+        """
+
+        playlist_path = uid + "/" + pid
+
+        util.check_if_git_playlist(self.git_dir, playlist_path)
+
+        # grab tracks from spotify from pid
+        results = self.sp.user_playlist_tracks(self.username, pid)
+        results = results["items"]
+
+        # get just a list of the track ids from the response
+        remote_tracks = []
+        for track in results:
+            if track["track"]["id"] != None:  # only take spotify tracks
+                remote_tracks.append(track["track"]["id"])
+
+               # get local track ids
+        with open(self.git_dir + playlist_path + "/index.txt") as f:
+            local_tracks = f.read().splitlines()
+
+        # merge tracks by adding if not added already. local takes precendence
+        # does not preserve position of new remote tracks
+        diff = False
+        for remote_track in remote_tracks:
+            if remote_track not in local_tracks:
+                diff = True
+                self.sp.user_playlist_remove_all_occurrences_of_tracks(
+                    self.username, pid, [remote_track])
+
+        for local_track in local_tracks:
+            if local_track not in remote_tracks:
+                diff = True
+                self.sp.user_playlist_add_tracks(self.username, pid,
+                                                 [local_track])
+        if diff:
+            return "Added and updated changes to the remote."
+        return "No changes updated to the remote, remote and local are the same"
+
     def song_lookup(self, name=None, artist=None, limit=1):
+        """Function to look up song
+
+        :param name: name of song
+        :type name: string
+        :param artist: artist of song
+        :type artist: string
+        :param limit: max number of results to be returned
+        :type limit: int
+        :returns: dictionary -- with track name, artist, and ID
+
+        """
         results = self.sp.search(q='track:' + name,
                                  type='track',
                                  limit=limit)
 
         if len(results['tracks']['items']) == 0:
-            return "No results found for " + name        
+            return "No results found for " + name
         else:
             songs = {}
             artists = results['tracks']['items'][0]['artists']
@@ -288,8 +457,6 @@ class SpotifyUser(object):
             songs['artists'] = artist_names
             songs['trackid'] = results['tracks']['items'][0]['id']
             songs['track'] = results['tracks']['items'][0]['name']
-            print("Results for " + songs['track'] +
-                  ' by ' + songs['artists'][0])
 
             # dictionary containing track name, artists, and track id
             return songs

@@ -1,4 +1,5 @@
-# GitSound ![Travis](https://travis-ci.org/GitSound/GitSound.svg?branch=show-local)
+# GitSound ![Travis](https://travis-ci.org/GitSound/GitSound.svg?branch=show-local) 
+
 Git for Music
 
 ## Setup
@@ -88,6 +89,23 @@ $ python3 cli.py show remote
 $ python3 cli.py select 0
 Set current playlist to Rock
 ```
+
+## Auto-documentation: 
+To generate automatic documentation from the command line.
+```
+Navigate to the backend folder.
+$ make clean
+$ make html
+Generate html file: index.html (backend/_build/html)
+$ make latexpdf
+Generate pdf file: GitSound.pdf (backend/_build/latex)
+```
+[Sphinx (pdf)](https://github.com/GitSound/GitSound/blob/autodoc/backend/_build/latex/GitSound.pdf)
+
+[Sphinx (html)](https://github.com/GitSound/GitSound/blob/autodoc/backend/_build/html/code.html)
+
+## Continuous Integration
+[Travis CI](https://travis-ci.org/GitSound/GitSound)
 
 # License
 MIT
