@@ -1,5 +1,4 @@
-"""A program to version control Spotify playlists.
-
+"""
 .. moduleauthor:: Ben Williams <ben.williams@colorado.edu>
 .. moduleauthor:: Michael Guida <michael.guida@colorado.edu>
 .. moduleauthor:: Nicole Woyarowicz <nicole.woytarowicz@colorado.edu>
@@ -18,9 +17,13 @@ import util
 
 
 class SpotifyUser(object):
+    """
+    A class that creates a Spotify user "self"
+    """
 
     def __init__(self, username, client_id, client_secret, redirect_uri):
-        """A class that creates a Spotify user "self"
+        """
+        A class that creates a Spotify user "self"
 
         :param username: Name of Spotify user
         :type username: string

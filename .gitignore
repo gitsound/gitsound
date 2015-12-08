@@ -2,6 +2,7 @@ backend/.activePlaylists/
 backend/.cache-*
 backend/spotify_appkey.key
 backend/__pycache__/
+backend/_build/html/_static
 backend/config.json
 .editorconfig
 *.pyc
