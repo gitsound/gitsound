@@ -16,6 +16,7 @@ Command List:
   remove <track_id>        Remove a track by id from the current playlist
   search <track>  Search for id of song on spotify
   pull                     Pull changes from spotify into current playlist
+  push                     Push changes from local playlist to spotify
   status                   See all changes to be committed
   commit                   Commit all changes
 """
@@ -105,6 +106,9 @@ if __name__ == '__main__':
     elif (cmd == 'pull'):
         print('On playlist ' + pname + ":")
         print(user.pull_spotify_playlist(uid, pid))
+    elif (cmd == "push"):
+        print("On playlist {0} :".format(pname))
+        print(user.push_spotify_playlist(uid, pid))
     elif (cmd == 'status'):
         print('Not yet implemented.')
         print('Show changes to commit')

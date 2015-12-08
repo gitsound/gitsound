@@ -377,7 +377,7 @@ class SpotifyUser(object):
                 print(track, file=f)
 
         # commit playlist changes if needed
-        if (diff == True):
+        if diff:
             self.commit_changes_to_playlist(uid, pid)
             return 'Added and committed changes from remote.'
         return 'No changes committed, up to date with remote.'
@@ -416,13 +416,18 @@ class SpotifyUser(object):
         diff = False
         for remote_track in remote_tracks:
             if remote_track not in local_tracks:
+                diff = True
                 self.sp.user_playlist_remove_all_occurrences_of_tracks(
-                    self.sp.username, pid, remote_track)
+                    self.username, pid, [remote_track])
 
         for local_track in local_tracks:
             if local_track not in remote_tracks:
-                self.sp.user_playlist_add_tracks(self.sp.username, pid,
-                                                 local_track)
+                diff = True
+                self.sp.user_playlist_add_tracks(self.username, pid,
+                                                 [local_track])
+        if diff:
+            return "Added and updated changes to the remote."
+        return "No changes updated to the remote, remote and local are the same"
 
     def song_lookup(self, name=None, artist=None, limit=1):
         """Function to look up song
