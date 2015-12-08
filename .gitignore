@@ -7,3 +7,5 @@ backend/config.json
 .editorconfig
 *.pyc
 *.sqlite
+*.sublime-project
+*.sublime-workspace

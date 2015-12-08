@@ -382,6 +382,48 @@ class SpotifyUser(object):
             return 'Added and committed changes from remote.'
         return 'No changes committed, up to date with remote.'
 
+    def push_spotify_playlist(self, uid, pid):
+        """Function to push playlist to Spotify
+
+        :param uid: user ID
+        :type uid: string
+        :param pid: playlist ID
+        :type pid: string
+        :returns: string -- stating status of pull (either successfull or not)
+
+        """
+
+        playlist_path = uid + "/" + pid
+
+        util.check_if_git_playlist(self.git_dir, playlist_path)
+
+        # grab tracks from spotify from pid
+        results = self.sp.user_playlist_tracks(self.username, pid)
+        results = results["items"]
+
+        # get just a list of the track ids from the response
+        remote_tracks = []
+        for track in results:
+            if track["track"]["id"] != None:  # only take spotify tracks
+                remote_tracks.append(track["track"]["id"])
+
+               # get local track ids
+        with open(self.git_dir + playlist_path + "/index.txt") as f:
+            local_tracks = f.read().splitlines()
+
+        # merge tracks by adding if not added already. local takes precendence
+        # does not preserve position of new remote tracks
+        diff = False
+        for remote_track in remote_tracks:
+            if remote_track not in local_tracks:
+                self.sp.user_playlist_remove_all_occurrences_of_tracks(
+                    self.sp.username, pid, remote_track)
+
+        for local_track in local_tracks:
+            if local_track not in remote_tracks:
+                self.sp.user_playlist_add_tracks(self.sp.username, pid,
+                                                 local_track)
+
     def song_lookup(self, name=None, artist=None, limit=1):
         """Function to look up song
 
