@@ -90,9 +90,18 @@ Set current playlist to Rock
 ```
 
 #### Auto-documentation: 
-[Sphinx (pdf)](https://github.com/GitSound/GitSound/blob/autodoc/backend/_build/latex/GitSound.pdf)
+To generate automatic documentation from the command line.
+```
+Navigate to the backend folder.
+$ make clean
+$ make html
+Generate html file: index.html (backend/_build/html)
+$ make latexpdf
+Generate pdf file: GitSound.pdf (backend/_build/latex)
+```
+#####[Sphinx (pdf)](https://github.com/GitSound/GitSound/blob/autodoc/backend/_build/latex/GitSound.pdf)
 
-[Sphinx (html)](https://github.com/GitSound/GitSound/blob/autodoc/backend/_build/html/code.html)
+#####[Sphinx (html)](https://github.com/GitSound/GitSound/blob/autodoc/backend/_build/html/code.html)
 
 # License
 MIT
