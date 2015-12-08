@@ -1,8 +1,8 @@
-Auto Generated Documentation
+Developer Documentation
 ============================
 
 .. automodule:: gitsound
    :members:
 
-.. autoclass:: SpotifyUser
+.. automodule:: util
    :members:

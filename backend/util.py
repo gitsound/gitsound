@@ -34,7 +34,8 @@ def save_config(data):
             "Cannot find config.json. Ensure proper directory or run setup.py to reconfigure.")
 
     with open('config.json', 'w') as f:
-        print(json.dumps(data, indent=4), file=f)
+        j = json.dumps(data, indent=4)
+        print >> f, j
 
 
 def check_if_git_playlist(gitDir, playlistPath):

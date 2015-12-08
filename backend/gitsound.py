@@ -18,9 +18,13 @@ import util
 
 
 class SpotifyUser(object):
+    """
+    A class that creates a Spotify user "self"
+    """
 
     def __init__(self, username, client_id, client_secret, redirect_uri):
-        """A class that creates a Spotify user "self"
+        """
+        A class that creates a Spotify user "self"
 
         :param username: Name of Spotify user
         :type username: string 

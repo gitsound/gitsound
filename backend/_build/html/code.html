@@ -6,7 +6,7 @@
   <head>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
     
-    <title>Auto Generated Documentation &mdash; GitSound 1.0.0 documentation</title>
+    <title>Developer Documentation &mdash; GitSound 1.0.0 documentation</title>
     
     <link rel="stylesheet" href="_static/alabaster.css" type="text/css" />
     <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
@@ -24,7 +24,7 @@
     <script type="text/javascript" src="_static/underscore.js"></script>
     <script type="text/javascript" src="_static/doctools.js"></script>
     <link rel="top" title="GitSound 1.0.0 documentation" href="index.html" />
-    <link rel="prev" title="Welcome to GitSound’s documentation!" href="index.html" />
+    <link rel="prev" title="GitSound documentation" href="index.html" />
    
   
   <meta name="viewport" content="width=device-width, initial-scale=0.9, maximum-scale=0.9">
@@ -37,8 +37,284 @@
         <div class="bodywrapper">
           <div class="body" role="main">
             
-  <div class="section" id="auto-generated-documentation">
-<h1>Auto Generated Documentation<a class="headerlink" href="#auto-generated-documentation" title="Permalink to this headline">¶</a></h1>
+  <div class="section" id="module-gitsound">
+<span id="developer-documentation"></span><h1>Developer Documentation<a class="headerlink" href="#module-gitsound" title="Permalink to this headline">¶</a></h1>
+<p>A program to version control Spotify playlists.</p>
+<dl class="class">
+<dt id="gitsound.SpotifyUser">
+<em class="property">class </em><code class="descclassname">gitsound.</code><code class="descname">SpotifyUser</code><span class="sig-paren">(</span><em>username</em>, <em>client_id</em>, <em>client_secret</em>, <em>redirect_uri</em><span class="sig-paren">)</span><a class="headerlink" href="#gitsound.SpotifyUser" title="Permalink to this definition">¶</a></dt>
+<dd><p>A class that creates a Spotify user &#8220;self&#8221;</p>
+<dl class="method">
+<dt id="gitsound.SpotifyUser.add_song_to_playlist">
+<code class="descname">add_song_to_playlist</code><span class="sig-paren">(</span><em>uid</em>, <em>pid</em>, <em>songid</em><span class="sig-paren">)</span><a class="headerlink" href="#gitsound.SpotifyUser.add_song_to_playlist" title="Permalink to this definition">¶</a></dt>
+<dd><p>Function to add song to playlist</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
+<li><strong>uid</strong> (<em>string</em>) &#8211; user ID</li>
+<li><strong>pid</strong> (<em>string</em>) &#8211; playlist ID to add song to</li>
+<li><strong>songid</strong> (<em>string</em>) &#8211; ID of song to add</li>
+</ul>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Raises:</th><td class="field-body"><p class="first last">RuntimeError</p>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="gitsound.SpotifyUser.commit_changes_to_playlist">
+<code class="descname">commit_changes_to_playlist</code><span class="sig-paren">(</span><em>uid</em>, <em>pid</em><span class="sig-paren">)</span><a class="headerlink" href="#gitsound.SpotifyUser.commit_changes_to_playlist" title="Permalink to this definition">¶</a></dt>
+<dd><p>Function to commit changes to playlist</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first last simple">
+<li><strong>uid</strong> (<em>string</em>) &#8211; user ID</li>
+<li><strong>pid</strong> (<em>string</em>) &#8211; playlist ID</li>
+</ul>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="gitsound.SpotifyUser.get_playlist_from_id">
+<code class="descname">get_playlist_from_id</code><span class="sig-paren">(</span><em>pid</em><span class="sig-paren">)</span><a class="headerlink" href="#gitsound.SpotifyUser.get_playlist_from_id" title="Permalink to this definition">¶</a></dt>
+<dd><p>Function that returns playlist name from pid</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>pid</strong> (<em>string</em>) &#8211; playlist ID</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body">playlist name</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="gitsound.SpotifyUser.get_playlist_id">
+<code class="descname">get_playlist_id</code><span class="sig-paren">(</span><em>position</em><span class="sig-paren">)</span><a class="headerlink" href="#gitsound.SpotifyUser.get_playlist_id" title="Permalink to this definition">¶</a></dt>
+<dd><p>Function to get a single playlist&#8217;s ID</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>position</strong> (<em>string</em>) &#8211; specifies what playlist to get</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body">ID in following format &#8216;{&#8220;pid&#8221;: foo, &#8220;uid&#8221;: bar}&#8217;</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="gitsound.SpotifyUser.get_playlist_ids">
+<code class="descname">get_playlist_ids</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#gitsound.SpotifyUser.get_playlist_ids" title="Permalink to this definition">¶</a></dt>
+<dd><p>Funtion to get playlist ids of user</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>self</strong> &#8211; Spotify user</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body">list &#8211; list of ids in following format &#8216;&#8217;{&#8220;pid&#8221;: foo, &#8220;uid&#8221;: bar}&#8217;&#8216;</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="gitsound.SpotifyUser.get_playlist_name">
+<code class="descname">get_playlist_name</code><span class="sig-paren">(</span><em>position</em><span class="sig-paren">)</span><a class="headerlink" href="#gitsound.SpotifyUser.get_playlist_name" title="Permalink to this definition">¶</a></dt>
+<dd><p>Function that returns playlist name from position</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>position</strong> (<em>string</em>) &#8211; specifies what playlist to get name from</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body">playlist name</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="gitsound.SpotifyUser.get_playlist_names">
+<code class="descname">get_playlist_names</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#gitsound.SpotifyUser.get_playlist_names" title="Permalink to this definition">¶</a></dt>
+<dd><p>Function to get all playlist names</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Returns:</th><td class="field-body">list &#8211; of playlist names</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="gitsound.SpotifyUser.get_playlist_tracks">
+<code class="descname">get_playlist_tracks</code><span class="sig-paren">(</span><em>uid</em>, <em>pid</em><span class="sig-paren">)</span><a class="headerlink" href="#gitsound.SpotifyUser.get_playlist_tracks" title="Permalink to this definition">¶</a></dt>
+<dd><p>Function to get tracks from pid</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
+<li><strong>uid</strong> (<em>string</em>) &#8211; user ID</li>
+<li><strong>pid</strong> (<em>string</em>) &#8211; playlist ID</li>
+</ul>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first last">list &#8211; tracks on playlist corresponding to pid</p>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="gitsound.SpotifyUser.init_git_playlist">
+<code class="descname">init_git_playlist</code><span class="sig-paren">(</span><em>uid</em>, <em>pid</em><span class="sig-paren">)</span><a class="headerlink" href="#gitsound.SpotifyUser.init_git_playlist" title="Permalink to this definition">¶</a></dt>
+<dd><p>Function to initialize playlist.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
+<li><strong>uid</strong> (<em>string</em>) &#8211; user ID</li>
+<li><strong>pid</strong> (<em>string</em>) &#8211; playlist ID to initialize</li>
+</ul>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Raises:</th><td class="field-body"><p class="first last">RuntimeError</p>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="gitsound.SpotifyUser.pull_spotify_playlist">
+<code class="descname">pull_spotify_playlist</code><span class="sig-paren">(</span><em>uid</em>, <em>pid</em><span class="sig-paren">)</span><a class="headerlink" href="#gitsound.SpotifyUser.pull_spotify_playlist" title="Permalink to this definition">¶</a></dt>
+<dd><p>Function to pull playlist from Spotify</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
+<li><strong>uid</strong> (<em>string</em>) &#8211; user ID</li>
+<li><strong>pid</strong> (<em>string</em>) &#8211; playlist ID</li>
+</ul>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first last">string &#8211; stating status of pull (either successfull or not)</p>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="gitsound.SpotifyUser.remove_song_from_playlist">
+<code class="descname">remove_song_from_playlist</code><span class="sig-paren">(</span><em>uid</em>, <em>pid</em>, <em>songid</em><span class="sig-paren">)</span><a class="headerlink" href="#gitsound.SpotifyUser.remove_song_from_playlist" title="Permalink to this definition">¶</a></dt>
+<dd><p>Function to remove song from playlist</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
+<li><strong>uid</strong> (<em>string</em>) &#8211; user ID</li>
+<li><strong>pid</strong> (<em>string</em>) &#8211; playlist ID to remove song from</li>
+<li><strong>songid</strong> (<em>string</em>) &#8211; ID of song to remove</li>
+</ul>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Raises:</th><td class="field-body"><p class="first last">RuntimeError</p>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="gitsound.SpotifyUser.song_lookup">
+<code class="descname">song_lookup</code><span class="sig-paren">(</span><em>name=None</em>, <em>artist=None</em>, <em>limit=1</em><span class="sig-paren">)</span><a class="headerlink" href="#gitsound.SpotifyUser.song_lookup" title="Permalink to this definition">¶</a></dt>
+<dd><p>Function to look up song</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
+<li><strong>name</strong> (<em>string</em>) &#8211; name of song</li>
+<li><strong>artist</strong> (<em>string</em>) &#8211; artist of song</li>
+<li><strong>limit</strong> (<em>int</em>) &#8211; max number of results to be returned</li>
+</ul>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first last">dictionary &#8211; with track name, artist, and ID</p>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+</dd></dl>
+
+<span class="target" id="module-util"></span><dl class="function">
+<dt id="util.check_if_git_playlist">
+<code class="descclassname">util.</code><code class="descname">check_if_git_playlist</code><span class="sig-paren">(</span><em>gitDir</em>, <em>playlistPath</em><span class="sig-paren">)</span><a class="headerlink" href="#util.check_if_git_playlist" title="Permalink to this definition">¶</a></dt>
+<dd><p>Function to check if playlist path is valid</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Raises:</th><td class="field-body">RuntimeError</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="function">
+<dt id="util.load_config">
+<code class="descclassname">util.</code><code class="descname">load_config</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#util.load_config" title="Permalink to this definition">¶</a></dt>
+<dd><p>Function to load the config file</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Returns:</th><td class="field-body">the config file</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Raises:</th><td class="field-body">RuntimeError</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="function">
+<dt id="util.save_config">
+<code class="descclassname">util.</code><code class="descname">save_config</code><span class="sig-paren">(</span><em>data</em><span class="sig-paren">)</span><a class="headerlink" href="#util.save_config" title="Permalink to this definition">¶</a></dt>
+<dd><p>Function to save the config file</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Raises:</th><td class="field-body">RuntimeError</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
 </div>
 
 
@@ -50,7 +326,7 @@
 <h3>Related Topics</h3>
 <ul>
   <li><a href="index.html">Documentation overview</a><ul>
-      <li>Previous: <a href="index.html" title="previous chapter">Welcome to GitSound&#8217;s documentation!</a></li>
+      <li>Previous: <a href="index.html" title="previous chapter">GitSound documentation</a></li>
   </ul></li>
 </ul>
 </div>
