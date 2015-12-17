@@ -88,24 +88,6 @@ When a playlist is initialized it will create a git version controlled playlist 
 
 Using a structure of `userId/playlistId/index.txt` allows us to keep git functioning as it would out of the box, while version controlling many different playlists. A `playlistId` from Spotify is only guaranteed to be unique to each `userId` and a `userId` is always guaranteed to be unique. This allows GitSound to organize many different playlists without the risk of collision. Each playlist will be contained within an `index.txt` file that stores the `trackIds` of the given playlist. These files are what get version controlled, so we can take advantage of git features like history of commits, branching and more.
 
-## Tests
-
-### Running locally
-
-To run the ember test suite
-
-```
-$ cd frontend/
-$ ember t -s
-```
-
-To run the python test suite
-
-```
-$ cd backend/
-$ python3 tests.py
-```
-
 # License
 MIT
 
