@@ -1,4 +1,4 @@
-# GitSound ![Travis](https://travis-ci.org/GitSound/GitSound.svg)
+# GitSound
 
 Git for Music
 

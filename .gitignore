@@ -5,6 +5,5 @@ backend/__pycache__/
 backend/config.json
 .editorconfig
 *.pyc
-*.sqlite
 *.sublime-project
 *.sublime-workspace
