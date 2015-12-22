@@ -1,4 +1,4 @@
-# GitSound ![Travis](https://travis-ci.org/GitSound/GitSound.svg?branch=show-local) 
+# GitSound ![Travis](https://travis-ci.org/GitSound/GitSound.svg)
 
 Git for Music
 
@@ -87,39 +87,6 @@ When a playlist is initialized it will create a git version controlled playlist 
 ```
 
 Using a structure of `userId/playlistId/index.txt` allows us to keep git functioning as it would out of the box, while version controlling many different playlists. A `playlistId` from Spotify is only guaranteed to be unique to each `userId` and a `userId` is always guaranteed to be unique. This allows GitSound to organize many different playlists without the risk of collision. Each playlist will be contained within an `index.txt` file that stores the `trackIds` of the given playlist. These files are what get version controlled, so we can take advantage of git features like history of commits, branching and more.
-
-## Auto-documentation: 
-To generate automatic documentation from the command line.
-```
-Navigate to the backend folder.
-$ make clean
-$ make html
-Generate html file: index.html (backend/_build/html)
-$ make latexpdf
-Generate pdf file: GitSound.pdf (backend/_build/latex)
-```
-[Sphinx (pdf)](https://github.com/GitSound/GitSound/blob/master/backend/_build/latex/GitSound.pdf)
-
-## Tests
-
-### Running locally 
-
-To run the ember test suite
-
-```
-$ cd frontend/
-$ ember t -s
-```
-
-To run the python test suite
-
-```
-$ cd backend/
-$ python3 tests.py
-```
-
-### Continuous Integration
-[Travis CI](https://travis-ci.org/GitSound/GitSound)
 
 # License
 MIT
