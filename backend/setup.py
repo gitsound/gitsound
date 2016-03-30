@@ -8,13 +8,14 @@ Only need to run this file once when initally setting up GitSound.
     User will need to obtain a client_id and client_secret from Spotify.
 
 """
-from pygit2 import Repository
-import gitsound
-import login
 import json
 import os
 import sys
 import getpass
+
+from pygit2 import Repository
+import gitsound
+import login
 
 if __name__ == '__main__':
     if (os.path.isfile("config.json") == True):

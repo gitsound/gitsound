@@ -4,14 +4,13 @@ Git for Music
 
 ## Setup
 
-GitSound only supports python 3. You will need the following installed on your computer.
+GitSound only supports `python 3`. 
 
-```sh
-$ pip3 install spotipy
-# pygit2 may require libgit2
-$ pip3 install pygit2
-$ pip3 install docopt==0.6.1
-```
+`$ git clone https://github.com/GitSound/GitSound && cd GitSound
+
+#### Installing the requirements
+
+`$ pip install -r requirements.txt`
 
 To setup GitSound, run the setup script from your terminal. You will need to get a client id and client secret key from Spotify.
 

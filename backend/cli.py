@@ -21,12 +21,13 @@ Command List:
   commit                   Commit all changes
 """
 
-from docopt import docopt
-from pygit2 import Repository
-import gitsound
 import util
 import json
 import os
+
+from docopt import docopt
+from pygit2 import Repository
+import gitsound
 
 if __name__ == '__main__':
 
