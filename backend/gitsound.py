@@ -1,3 +1,5 @@
+# -*- coding: utf-8 -*-
+
 """
 .. moduleauthor:: Ben Williams <ben.williams@colorado.edu>
 .. moduleauthor:: Michael Guida <michael.guida@colorado.edu>
@@ -6,15 +8,13 @@
 
 """
 
-
-# coding=utf-8
 from __future__ import unicode_literals, print_function
-import spotipy
-import spotipy.util
 import os
-import pygit2
 import util
 
+import spotipy.util
+import pygit2
+import spotipy
 
 class SpotifyUser(object):
     """
@@ -54,10 +54,11 @@ class SpotifyUser(object):
 
         # gets the token from the spotify api, can not do anything without this
         self.token = spotipy.util.prompt_for_user_token(
-            username, client_id=client_id,
-            client_secret=client_secret,
-            redirect_uri=redirect_uri,
-            scope=scope)
+                        username, client_id=client_id,
+                        client_secret=client_secret,
+                        redirect_uri=redirect_uri,
+                        scope=scope
+                    )
 
         # error out if we don't have a token
         if self.token == None:
@@ -149,8 +150,7 @@ class SpotifyUser(object):
         :raises: RuntimeError
 
         """
-
-        playlist_path = uid + "/" + pid
+        playlist_path = os.path.join(uid, pid)
 
         # gets the track list IDs
         trackList = self.get_playlist_tracks(uid, pid)
@@ -172,19 +172,20 @@ class SpotifyUser(object):
         new_repo = pygit2.init_repository(self.git_dir + playlist_path)
         new_tree = new_repo.TreeBuilder().write()
 
-        first_commit = new_repo.create_commit("HEAD", self.author, self.comitter,
-                                              "Created master", new_tree, [])
+        first_commit = new_repo.create_commit(
+            "HEAD", self.author, self.comitter, "Created master", new_tree, [])
 
         # create blob for the index file
         file_blob = new_repo.create_blob_fromdisk(
-            self.git_dir + playlist_path + "/index.txt")
+            os.path.join(self.git_dir, playlist_path, 'index.txt'))
+        
 
         # build tree again
         new_tree = new_repo.TreeBuilder()
 
         # add our new index file
         new_tree.insert("index.txt", file_blob,
-                        os.stat(self.git_dir + playlist_path + "/index.txt").st_mode)
+                os.stat(self.git_dir + playlist_path + "/index.txt").st_mode)
 
         # build tree again
         tree = new_tree.write()
@@ -212,7 +213,7 @@ class SpotifyUser(object):
 
         """
 
-        playlist_path = uid + "/" + pid
+        playlist_path = os.path.join(uid, pid)
 
         util.check_if_git_playlist(self.git_dir, playlist_path)
 
