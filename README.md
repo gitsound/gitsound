@@ -6,7 +6,7 @@ Git for Music
 
 GitSound only supports `python 3`. 
 
-`$ git clone https://github.com/GitSound/GitSound && cd GitSound
+`$ git clone https://github.com/GitSound/GitSound && cd GitSound`
 
 #### Installing the requirements
 
