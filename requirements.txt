@@ -1,3 +1,2 @@
 spotipy
 pygit2
-docopt>=0.6.1

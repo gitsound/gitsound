@@ -1,12 +1,18 @@
 #! /usr/bin/env python3
-"""
+
+import util
+import json
+import os
+import sys
+
+from pygit2 import Repository
+import gitsound
+
+USAGE_MESSAGE = """
 GitSound
 
 Usage:
   cli.py <command> [<argument>] [--help]
-
-options:
-  -h, --help             Show this message.
 
 Command List:
   show [local | remote]    Show all playlists locally or form spotify
@@ -21,22 +27,19 @@ Command List:
   commit                   Commit all changes
 """
 
-import util
-import json
-import os
-
-from docopt import docopt
-from pygit2 import Repository
-import gitsound
-
 if __name__ == '__main__':
 
-    # Initialize docopt and grab args
-    args = docopt(__doc__)
-
     # Simplify references to args
-    cmd = args['<command>']
-    arg = args['<argument>']
+    try:
+        cmd = sys.argv[1]
+    except:
+        print(USAGE_MESSAGE)
+
+    arg = None
+    try:
+        arg = sys.argv[2]
+    except:
+        pass
 
     config = util.load_config()
 
@@ -49,8 +52,8 @@ if __name__ == '__main__':
     pname = config["current_playlist"]["name"]
 
     # Determine how to handle args
-    if (cmd == 'show'):
-        if (arg == 'local'):
+    if cmd == 'show':
+        if arg == 'local':
             playlists = []
             git_dir = ".activePlaylists/" + user.username + "/"
             pids = [pid for pid in os.listdir(git_dir)]
@@ -67,7 +70,7 @@ if __name__ == '__main__':
         else:
             print('Not yet implemented.')
             print('Show all playlists, local and remote')
-    elif (cmd == 'select' and arg != None):
+    elif cmd == 'select' and arg is not None:
         ids = user.get_playlist_id(arg)
         config["current_playlist"]["uid"] = ids["uid"]
         config["current_playlist"]["pid"] = ids["pid"]
@@ -76,7 +79,7 @@ if __name__ == '__main__':
         util.save_config(config)
 
         print('Set current playlist to ' + config["current_playlist"]["name"])
-    elif (cmd == 'clone' and arg != None):
+    elif cmd == 'clone' and arg is not None:
         ids = user.get_playlist_id(arg)
         config["current_playlist"]["uid"] = ids["uid"]
         config["current_playlist"]["pid"] = ids["pid"]
@@ -89,35 +92,35 @@ if __name__ == '__main__':
             print('Cloned playlist ' + config["current_playlist"]["name"])
         except:
             print(config["current_playlist"]["name"] + ' already cloned.')
-    elif (cmd == 'add' and arg != None):
-        if (not pid):
+    elif cmd == 'add' and arg is not None:
+        if not pid:
             print('Select a playlist first')
         else:
             user.add_song_to_playlist(uid, pid, arg)
             print('Added track with id ' + arg + ' to ' + pname)
-    elif (cmd == 'remove' and arg != None):
+    elif cmd == 'remove' and arg is not None:
         if (not pid):
             print('Select a playlist first')
         else:
             user.remove_song_from_playlist(uid, pid, arg)
             print('Removed track with id ' + arg + ' from ' + pname)
-    elif (cmd == 'commit'):
+    elif cmd == 'commit':
         user.commit_changes_to_playlist(uid, pid)
         print('Committed all changes to ' + pname)
-    elif (cmd == 'pull'):
+    elif cmd == 'pull':
         print('On playlist ' + pname + ":")
         print(user.pull_spotify_playlist(uid, pid))
-    elif (cmd == "push"):
+    elif cmd == "push":
         print("On playlist {0} :".format(pname))
         print(user.push_spotify_playlist(uid, pid))
-    elif (cmd == 'status'):
+    elif cmd == 'status':
         print('Not yet implemented.')
         print('Show changes to commit')
-    elif (cmd == 'search' and arg != None):
+    elif cmd == 'search' and arg is not None:
         search = user.song_lookup(name=arg)
         print('Track: ' + search["track"])
         # for now only print first artist
         print('Artist: ' + search["artists"][0])
         print('Track ID: ' + search["trackid"])
     else:
-        print('Usage: cli.py <command> [<argument>]')
+        print(USAGE_MESSAGE)
